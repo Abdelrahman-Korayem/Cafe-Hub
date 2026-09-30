@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
-
+import Link from "next/link";
 export default function PricingSection() {
   const [billingCycle, setBillingCycle] = useState("monthly"); // monthly, 6months, 12months
 
@@ -121,9 +121,13 @@ export default function PricingSection() {
 
             {/* زر الاشتراك */}
             <div>
-              <button className="w-full py-3.5 rounded-xl border border-primary/20 text-primary text-xs font-bold hover:bg-primary/5 transition">
+              <Link
+                href="/register"
+                className="w-full py-3.5 rounded-xl border border-primary/20 text-primary text-xs font-bold hover:bg-primary/5 transition flex items-center justify-center"
+              >
                 Select Start Plan →
-              </button>
+              </Link>
+
               <p className="text-[10px] text-center text-primary/40 mt-3">
                 Billed per selected interval + tax/extra-invoice
               </p>
@@ -191,9 +195,12 @@ export default function PricingSection() {
 
             {/* زر الاشتراك */}
             <div>
-              <button className="w-full py-3.5 rounded-xl bg-secondary text-cream text-xs font-bold hover:bg-secondary/90 transition shadow-md">
+              <Link
+                href="/register"
+                className="w-full py-3.5 rounded-xl bg-secondary text-cream text-xs font-bold hover:bg-secondary/90 transition shadow-md flex items-center justify-center"
+              >
                 Select Growth Plan →
-              </button>
+              </Link>
               <p className="text-[10px] text-center text-cream/50 mt-3">
                 Recommended for roasteries & specialty chains
               </p>
