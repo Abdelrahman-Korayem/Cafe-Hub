@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-
-import "../globals.css";
 import Navbar from "../_components/layout/Navbar";
-
 import Footer from "../_components/layout/Footer";
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nuvo-cafe.com"),
@@ -59,7 +49,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
