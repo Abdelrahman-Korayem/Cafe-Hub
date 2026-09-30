@@ -83,7 +83,7 @@ export default function Home() {
 
                 <div className="flex flex-wrap items-center gap-4 pt-2">
                   <Link
-                    href="#start"
+                    href="Subscription"
                     className="inline-flex items-center justify-center bg-[#0F291E] hover:bg-[#183d2d] text-white font-medium px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg"
                   >
                     Start now
@@ -131,13 +131,17 @@ export default function Home() {
                 aria-label="Product overview image"
               >
                 <div className="relative mx-auto max-w-md lg:max-w-none">
-                  <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-neutral-100 relative h-[420px]">
-                    <div className="absolute inset-0 bg-neutral-300 flex items-center justify-center text-neutral-500 font-medium">
-                      Café order and WiFi management interface
-                    </div>
+                  <div className="relative h-[420px] overflow-hidden rounded-3xl border-4 border-white bg-neutral-100 shadow-2xl">
+    <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-neutral-300 font-medium text-neutral-500">
+      <img
+        src="/logo/4da414ac0fa4b53dcc16b7184afbf8a01383e24b.jpg"
+        alt="Logo"
+        className="h-full w-full object-cover"
+      />
+    </div>
                   </div>
 
-                  <div className="absolute -top-4 -left-4 sm:-left-8 bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-neutral-100 flex items-center gap-3">
+                  <div className="  absolute -top-4 -left-4 sm:-left-8 bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-neutral-100 flex items-center gap-3">
                     <div className="bg-emerald-50 p-2 rounded-xl text-emerald-600 font-bold">
                       QR
                     </div>
@@ -275,7 +279,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section id='how-it-works'
+          <section
+            id="how-it-works"
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-[#F5EFE6]/40 rounded-3xl my-12 border border-[#EBE3D5]"
             aria-labelledby="how-it-works-heading"
           >
@@ -345,7 +350,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="features"
+          <section
+            id="features"
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
             aria-labelledby="features-heading"
           >
@@ -702,7 +708,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section 
+          <section
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mb-12"
             aria-labelledby="testimonials-heading"
           >
@@ -791,7 +797,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="faq"
+          <section
+            id="faq"
             className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mb-20"
             aria-labelledby="faq-heading"
           >

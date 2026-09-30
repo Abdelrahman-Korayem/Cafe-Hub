@@ -42,7 +42,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#book"
+            href="Subscription"
             className="rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-cream transition-opacity hover:opacity-90"
           >
             Book Now
