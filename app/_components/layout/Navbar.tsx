@@ -41,12 +41,12 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
-          <a
-            href="#book"
+          <Link
+            href="/register"
             className="rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-cream transition-opacity hover:opacity-90"
           >
             Book Now
-          </a>
+          </Link>
           <button
             type="button"
             aria-label="Account"
