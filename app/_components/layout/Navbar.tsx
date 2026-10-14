@@ -29,7 +29,10 @@ export default function Navbar() {
             <ul className="hidden items-center gap-8 text-sm text-ink/80 md:flex">
               {links.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="transition-colors hover:text-brand-700">
+                  <a
+                    href={l.href}
+                    className="transition-colors hover:text-brand-700"
+                  >
                     {l.label}
                   </a>
                 </li>
@@ -37,7 +40,7 @@ export default function Navbar() {
             </ul>
 
             <div className="flex items-center gap-2">
-              <Button href="#get-started" className="hidden sm:inline-flex">
+              <Button href="Subscription" className="hidden sm:inline-flex">
                 Get Started
               </Button>
               <button
@@ -54,7 +57,10 @@ export default function Navbar() {
           </div>
 
           {open && (
-            <div id="mobile-menu" className="mt-3 border-t border-black/5 pt-3 md:hidden">
+            <div
+              id="mobile-menu"
+              className="mt-3 border-t border-black/5 pt-3 md:hidden"
+            >
               <ul className="flex flex-col gap-1 text-sm">
                 {links.map((l) => (
                   <li key={l.href}>
