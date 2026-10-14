@@ -1,61 +1,80 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { User } from "lucide-react";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import Logo from "@/app/_components/ui/Logo";
+import Button from "@/app/_components/ui/Button";
+import Container from "@/app/_components/ui/Container";
 
 const links = [
-  { label: "Features", href: "#features" },
-  { label: "How it Works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
+  { href: "#product", label: "Product" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#features", label: "Features" },
+  { href: "#cafes", label: "For cafés" },
 ];
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-primary/10 bg-cream/90 backdrop-blur">
-      <nav className="mx-auto flex h-20  items-center justify-between px-6">
-        <Link href="/" aria-label="Nuvo home">
-          <Image
-            src="/logo/navlogo.png"
-            alt="Nuvo logo"
-            width={96}
-            height={40}
-            priority
-            className="h-10 w-auto"
-          />
-        </Link>
+    <header className="fixed inset-x-0 top-3 z-50 sm:top-4">
+      <Container>
+        <nav
+          aria-label="Main"
+          className="relative rounded-2xl bg-white/95 px-4 py-3 shadow-sm ring-1 ring-black/5 backdrop-blur sm:px-6"
+        >
+          <div className="flex items-center justify-between">
+            <Logo />
 
-        <ul className="hidden items-center gap-10 md:flex">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="text-sm font-medium text-primary/70 transition-colors hover:text-primary"
+            <ul className="hidden items-center gap-8 text-sm text-ink/80 md:flex">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className="transition-colors hover:text-brand-700">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex items-center gap-2">
+              <Button href="#get-started" className="hidden sm:inline-flex">
+                Get Started
+              </Button>
+              <button
+                type="button"
+                className="grid size-10 place-items-center rounded-lg text-ink md:hidden"
+                aria-expanded={open}
+                aria-controls="mobile-menu"
+                aria-label={open ? "Close menu" : "Open menu"}
+                onClick={() => setOpen((v) => !v)}
               >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+                {open ? <X className="size-5" /> : <Menu className="size-5" />}
+              </button>
+            </div>
+          </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/Subscription"
-            className="rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-cream transition-opacity hover:opacity-90"
-          >
-            Book Now
-          </Link>
-          <button
-            type="button"
-            aria-label="Account"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-cream transition-opacity hover:opacity-90"
-          >
-            <User size={18} />
-          </button>
-        </div>
-      </nav>
+          {open && (
+            <div id="mobile-menu" className="mt-3 border-t border-black/5 pt-3 md:hidden">
+              <ul className="flex flex-col gap-1 text-sm">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-lg px-2 py-2.5 hover:bg-brand-50"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <Button href="#get-started" className="mt-3 w-full">
+                Get Started
+              </Button>
+            </div>
+          )}
+        </nav>
+      </Container>
     </header>
   );
 }
