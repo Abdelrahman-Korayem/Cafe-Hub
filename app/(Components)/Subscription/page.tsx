@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, Handshake } from "lucide-react";
 import Link from "next/link";
 export default function PricingSection() {
   const [billingCycle, setBillingCycle] = useState("monthly"); // monthly, 6months, 12months
@@ -212,7 +212,7 @@ export default function PricingSection() {
         <div className="mt-10 bg-white border border-primary/10 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 text-left">
           <div className="flex items-center gap-3">
             <span className="p-2.5 rounded-xl bg-primary/5 text-primary text-lg">
-              🏢
+              <Handshake className="size-5" />
             </span>
             <div>
               <div className="text-xs font-bold text-primary">

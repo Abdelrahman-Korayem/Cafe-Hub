@@ -74,7 +74,7 @@ export default function Navbar() {
                   </li>
                 ))}
               </ul>
-              <Button href="#get-started" className="mt-3 w-full">
+              <Button href="Subscription" className="mt-3 w-full">
                 Get Started
               </Button>
             </div>

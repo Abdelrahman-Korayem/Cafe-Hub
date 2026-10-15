@@ -38,7 +38,7 @@ export default function Inventory() {
   return (
     <section id="Inventory" className="bg-olive-100 py-16 sm:py-20">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="mx-auto w-full max-w-[1224px] px-4 sm:px-6 lg:px-8">
           {/* Left: stock table */}
           <div>
             <Pill tone="green" className="bg-green-500/10">
@@ -67,7 +67,11 @@ export default function Inventory() {
                   {stock.map((row) => (
                     <tr key={row.name} className="border-t border-black/5">
                       <td className="px-5 py-3 inline-flex items-center gap-3">
-                        <img src={row.img} alt={row.name} className="size-10" />
+                        <img
+                          src={row.img}
+                          alt={row.name}
+                          className="size-10 "
+                        />
                         <div>
                           <p className="font-semibold">{row.name}</p>
                           <p className="text-xs text-ink/50">{row.unit}</p>
@@ -147,7 +151,11 @@ export default function Inventory() {
                     Review orders
                   </Button>
                 </div>
-                <img src="/images/Illustration2.png" alt="" />
+                <img
+                  src="/images/Illustration2.png"
+                  alt=""
+                  className="overflow-auto"
+                />
               </article>
 
               <article className="flex items-center justify-between gap-4 rounded-2xl border border-black/5 bg-white p-5">
@@ -170,7 +178,11 @@ export default function Inventory() {
                     See reasoning →
                   </a>
                 </div>
-                <img src="/images/Illustration.png" alt="" />
+                <img
+                  src="/images/Illustration.png"
+                  alt=""
+                  className="overflow-auto"
+                />
               </article>
             </div>
           </div>
