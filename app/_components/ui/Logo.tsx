@@ -1,25 +1,15 @@
 import Link from "next/link";
-import { cn } from "@/lib/cn";
-import Image from "next/image";
+import { Coffee } from "lucide-react";
 
-export default function Logo({ light }: { light?: boolean }) {
+export default function Logo() {
   return (
     <Link
       href="/"
-      className={cn(
-        "text-xl tracking-tight",
-        light ? "text-white" : "text-brand-700"
-      )}
       aria-label="CafeHub home"
+      className="flex items-center gap-2 text-xl font-bold tracking-tight text-ink"
     >
-          <Image
-            src="/logo/navlogo.png"
-            alt="Nuvo logo"
-            width={96}
-            height={40}
-            priority
-            className="h-10 w-auto"
-          />
+      <Coffee className="size-6 text-secondary" aria-hidden />
+      CAFE HUB
     </Link>
   );
 }

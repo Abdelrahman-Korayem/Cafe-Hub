@@ -1,29 +1,25 @@
-import Hero from "@/app/_components/sections/Hero";
-import Product from "@/app/_components/sections/Product";
-import Journey from "@/app/_components/sections/Journey";
-import DigitalOrdering from "@/app/_components/sections/DigitalOrdering";
-import Dashboard from "@/app/_components/sections/Dashboard";
-import Inventory from "@/app/_components/sections/Inventory";
-import Operations from "@/app/_components/sections/Operations";
-import WhyCafeHub from "@/app/_components/sections/WhyCafeHub";
-import CTA from "@/app/_components/sections/CTA";
-import FAQ from "@/app/_components/sections/FAQ";
+import Hero from "../_components/sections/Hero";
+import TrustBar from "../_components/sections/FeaturesBar";
+import Features from "../_components/sections/Features";
+import QrOrdering from "../_components/sections/QrOrdering";
+import AppShowcase from "../_components/sections/AppShowcase";
+import Testimonials from "../_components/sections/Testimonials";
+import Pricing from "../_components/sections/Pricing";
+import Faq from "../_components/sections/Faq";
+
+
 
 export default function Home() {
   return (
-    <>
-      <main>
-        <Hero />
-        <Product />
-        <Journey />
-        <DigitalOrdering />
-        <Dashboard />
-        <Inventory />
-        <Operations />
-        <WhyCafeHub />
-        <CTA />
-        <FAQ />
-      </main>
-    </>
+    <main>
+     <Hero />
+     <TrustBar />
+     <Features />
+     <QrOrdering />
+     <AppShowcase />
+     <Testimonials />
+     <Pricing />
+     <Faq />
+    </main>
   );
 }
