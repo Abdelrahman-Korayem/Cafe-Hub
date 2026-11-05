@@ -185,13 +185,13 @@ export default function RegisterPage() {
               I agree to Terms &amp; Cafe Service SLA
             </label>
 
-            <button
-              type="submit"
+            <Link
+              href="/Subscription"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-secondary"
             >
               Continue to Setup &amp; Payment
               <ArrowRight className="size-4" aria-hidden />
-            </button>
+            </Link>
           </form>
 
           <p className="mt-6 text-center text-xs text-ink">

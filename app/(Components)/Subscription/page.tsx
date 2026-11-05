@@ -272,7 +272,7 @@ export default function SubscriptionPage() {
                 </ul>
 
                 <Link
-                  href="#"
+                  href={`/pending-approval?plan=${encodeURIComponent(plan.name)}&billing=${billing}`}
                   className={cn(
                     "mt-8 inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors",
                     plan.popular

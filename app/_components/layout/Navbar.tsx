@@ -47,7 +47,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-2">
               <Button
-                href="#pricing"
+                href="/register"
                 className="hidden whitespace-nowrap sm:inline-flex md:px-4 md:py-2 md:text-sm lg:px-6 lg:py-3 lg:text-base"
               >
                 Get Started
