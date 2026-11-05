@@ -1,234 +1,293 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Sparkles, Handshake } from "lucide-react";
 import Link from "next/link";
-export default function PricingSection() {
-  const [billingCycle, setBillingCycle] = useState("monthly"); // monthly, 6months, 12months
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  CircleHelp,
+  Coffee,
+  Home,
+  Infinity as InfinityIcon,
+  Table,
+} from "lucide-react";
+import Container from "@/app/_components/ui/Container";
+import { cn } from "@/lib/cn";
+
+type Billing = "monthly" | "yearly";
+
+const plans = [
+  {
+    name: "Starter 20",
+    tagline: "For Single Cafés",
+    houses: 1,
+    branches: "1 branch",
+    tables: "Up to 20 tables",
+    unlimitedTables: false,
+    monthly: 1000,
+    yearly: 750,
+    priceStyle: "suffix", // 750 / EGP
+    cta: "Choose Starter",
+    popular: false,
+    features: [
+      "QR Table Ordering",
+      "Menu Management",
+      "Order Management",
+      "Smart Inventory Tracking",
+      "Low-Stock Alerts",
+      "Expiry Date Alerts",
+    ],
+  },
+  {
+    name: "Growth 50",
+    tagline: "For Growing Businesses",
+    houses: 2,
+    branches: "Up to 2 branches",
+    tables: "50 tables per branch",
+    unlimitedTables: false,
+    monthly: 2000,
+    yearly: 1500,
+    priceStyle: "prefix", // EGP 1,500
+    cta: "Choose Growth",
+    popular: true,
+    features: [
+      "QR Table Ordering",
+      "Menu Management",
+      "Order Management",
+      "Smart Inventory Tracking",
+      "Low-Stock Alerts",
+      "Expiry Date Alerts",
+      "Sales & Order Reports",
+      "Centralized Branch Management",
+    ],
+  },
+  {
+    name: "Pro",
+    tagline: "For Café Chains",
+    houses: 3,
+    branches: "3+ branches",
+    tables: "Unlimited tables",
+    unlimitedTables: true,
+    monthly: 3000,
+    yearly: 2250,
+    priceStyle: "suffix",
+    cta: "Choose Pro",
+    popular: false,
+    features: [
+      "QR Table Ordering",
+      "Menu Management",
+      "Order Management",
+      "Smart Inventory Tracking",
+      "Low-Stock Alerts",
+      "Expiry Date Alerts",
+      "Multi-Branch Analytics",
+      "Advanced Reports",
+    ],
+  },
+] as const;
+
+const fmt = (n: number) => n.toLocaleString("en-US");
+
+export default function SubscriptionPage() {
+  const [billing, setBilling] = useState<Billing>("yearly");
+  const isYearly = billing === "yearly";
 
   return (
-    <section id="pricing" className="py-20 px-6 bg-cream">
-      <div className="max-w-6xl mx-auto text-center">
-        {/* الترويسة العلوية (Stepper & Subtitle) */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-xs font-medium text-primary mb-6">
-          <span>1. Select Plan</span> &gt; <span>2. Café & Owner Profile</span>{" "}
-          &gt; <span>3. Launch in 48h</span>
+    <div className="min-h-screen bg-white pb-16">
+      {/* Header */}
+      <header className="bg-[#fdf6e3]">
+        <Container className="flex items-center justify-between py-5">
+          <Link
+            href="/"
+            className="flex items-center gap-3 text-2xl font-bold text-ink"
+            aria-label="CafeHub home"
+          >
+            <Coffee className="size-8 text-secondary" aria-hidden />
+            CAFE HUB
+          </Link>
+          <nav aria-label="Secondary" className="flex items-center gap-6 text-xs text-ink/80">
+            <Link href="/" className="flex items-center gap-1.5 hover:text-secondary">
+              <ArrowLeft className="size-3.5" aria-hidden />
+              Back to main site
+            </Link>
+            <Link href="#" className="flex items-center gap-1.5 hover:text-secondary">
+              <CircleHelp className="size-3.5" aria-hidden />
+              Help &amp; Support
+            </Link>
+          </nav>
+        </Container>
+      </header>
+
+      <Container>
+        <div className="mt-16 text-center">
+          <h1 className="text-xl font-bold text-ink sm:text-2xl">
+            Choose the Plan your cafe’s Needs
+          </h1>
+
+          {/* Billing toggle */}
+          <div
+            role="group"
+            aria-label="Billing period"
+            className="mx-auto mt-6 inline-flex rounded-full bg-[#fdf6e3] p-1 ring-1 ring-sand"
+          >
+            <button
+              type="button"
+              onClick={() => setBilling("monthly")}
+              aria-pressed={!isYearly}
+              className={cn(
+                "rounded-full px-7 py-2 text-xs font-bold transition-colors",
+                !isYearly ? "bg-primary text-white" : "text-ink",
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              type="button"
+              onClick={() => setBilling("yearly")}
+              aria-pressed={isYearly}
+              className={cn(
+                "flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold transition-colors",
+                isYearly ? "bg-primary text-white" : "text-ink",
+              )}
+            >
+              Yearly
+              <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-white">
+                Save 25%
+              </span>
+            </button>
+          </div>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">
-          Select the Right Operating Plan for Your Café
-        </h2>
-        <p className="text-primary/70 text-sm md:text-base max-w-xl mx-auto mb-8">
-          Scale your floor flow, eliminate waiter bottlenecks, and issue
-          automated WiFi cards with zero per-order commission.
-        </p>
+        <ul className="mx-auto mt-14 grid max-w-5xl items-stretch gap-5 md:grid-cols-3">
+          {plans.map((plan) => {
+            const amount = isYearly ? plan.yearly : plan.monthly;
+            const priceLabel =
+              plan.priceStyle === "prefix"
+                ? `EGP ${fmt(amount)}`
+                : `${fmt(amount)} / EGP`;
+            const oldLabel =
+              plan.priceStyle === "prefix"
+                ? `EGP\n${fmt(plan.monthly)}`
+                : `${fmt(plan.monthly)}\nEGP`;
 
-        {/* أزرار تبديل مدة الاشتراك (Billing Toggle) */}
-        <div className="inline-flex items-center p-1.5 rounded-full bg-primary/5 border border-primary/10 mb-12 gap-2">
-          <button
-            onClick={() => setBillingCycle("monthly")}
-            className={`px-5 py-2 rounded-full text-xs font-semibold transition ${
-              billingCycle === "monthly"
-                ? "bg-primary text-cream shadow-md"
-                : "text-primary/70 hover:text-primary"
-            }`}
-          >
-            3 Months (Standard)
-          </button>
-          <button
-            onClick={() => setBillingCycle("6months")}
-            className={`px-5 py-2 rounded-full text-xs font-semibold transition flex items-center gap-1.5 ${
-              billingCycle === "6months"
-                ? "bg-primary text-cream shadow-md"
-                : "text-primary/70 hover:text-primary"
-            }`}
-          >
-            6 Months{" "}
-            <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full">
-              Save 7%
-            </span>
-          </button>
-          <button
-            onClick={() => setBillingCycle("12months")}
-            className={`px-5 py-2 rounded-full text-xs font-semibold transition flex items-center gap-1.5 ${
-              billingCycle === "12months"
-                ? "bg-primary text-cream shadow-md"
-                : "text-primary/70 hover:text-primary"
-            }`}
-          >
-            12 Months{" "}
-            <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full">
-              Best Value + Save 15%
-            </span>
-          </button>
-        </div>
-
-        {/* شبكة الباقات (Pricing Cards Grid) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left items-stretch">
-          {/* الباقة الأولى: Start Package */}
-          <div className="bg-white rounded-3xl p-8 border border-primary/10 shadow-sm flex flex-col justify-between relative">
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-primary/50 mb-1">
-                Web & QR Essential
-              </div>
-              <h3 className="text-2xl font-bold text-primary mb-2">
-                Start Package
-              </h3>
-              <p className="text-xs text-primary/70 mb-6">
-                Ideal for single-location espresso bars & boutique roasteries
-                seeking rapid-fire in-table ordering without capital app
-                development.
-              </p>
-
-              {/* السعر */}
-              <div className="mb-6 pb-6 border-b border-primary/10">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-primary">
-                    7,500
-                  </span>
-                  <span className="text-sm font-semibold text-primary/70">
-                    EGP / month
-                  </span>
-                </div>
-                <p className="text-[11px] text-primary/50 mt-1">
-                  Equivalent to 7,500 EGP/mo
-                </p>
-              </div>
-
-              {/* قائمة المميزات */}
-              <div className="space-y-3 mb-8">
-                <div className="text-xs font-semibold text-primary/70 uppercase mb-2">
-                  Included in Start:
-                </div>
-                {[
-                  "Branded QR Ordering Web App & PWA",
-                  "Unified Café Admin Panel",
-                  "Integrated WiFi Card Generator",
-                  "Up to 3 Branches & 15 Tables Included",
-                  "Unlimited Orders (0% Commission)",
-                  "48-Hour Setup & Menu Handover",
-                ].map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 text-xs text-primary/80"
-                  >
-                    <Check className="w-4 h-4 text-secondary shrink-0" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* زر الاشتراك */}
-            <div>
-              <Link
-                href="/register"
-                className="w-full py-3.5 rounded-xl border border-primary/20 text-primary text-xs font-bold hover:bg-primary/5 transition flex items-center justify-center"
+            return (
+              <li
+                key={plan.name}
+                className={cn(
+                  "relative flex flex-col rounded-2xl bg-[#fdf9f1] p-5 ring-1 ring-black/10",
+                  plan.popular &&
+                    "z-10 ring-2 ring-secondary shadow-[0_10px_40px_rgba(153,95,47,0.35)] md:-my-1.5 md:py-7",
+                )}
               >
-                Select Start Plan →
-              </Link>
-
-              <p className="text-[10px] text-center text-primary/40 mt-3">
-                Billed per selected interval + tax/extra-invoice
-              </p>
-            </div>
-          </div>
-
-          {/* الباقة الثانية: Growth Package (المميزة) */}
-          <div className="bg-primary text-cream rounded-3xl p-8 shadow-xl flex flex-col justify-between relative border border-secondary/30">
-            {/* بادئة الأكثر طلباً */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary text-cream text-[10px] font-bold tracking-wider px-4 py-1.5 rounded-full uppercase flex items-center gap-1 shadow-md">
-              <Sparkles className="w-3 h-3" /> Most Popular + Full Brand
-              Experience
-            </div>
-
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-cream/60 mb-1 mt-2">
-                Native App & QR Essential
-              </div>
-              <h3 className="text-2xl font-bold text-cream mb-2">
-                Growth Package
-              </h3>
-              <p className="text-xs text-cream/70 mb-6">
-                Engineered for growing multi-location businesses demanding
-                native App store presence, customer retention and loyalty push
-                alerts.
-              </p>
-
-              {/* السعر */}
-              <div className="mb-6 pb-6 border-b border-cream/10">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-cream">
-                    15,000
+                {plan.popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-secondary px-5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                    Most Popular
                   </span>
-                  <span className="text-sm font-semibold text-cream/70">
-                    EGP / month
-                  </span>
-                </div>
-                <p className="text-[11px] text-cream/50 mt-1">
-                  Equivalent to 15,000 EGP/mo
-                </p>
-              </div>
+                )}
 
-              {/* قائمة المميزات */}
-              <div className="space-y-3 mb-8">
-                <div className="text-xs font-semibold text-cream/70 uppercase mb-2">
-                  Everything in Start, plus native power:
-                </div>
-                {[
-                  "Native iOS App on Apple App Store (Published under your own brand identity)",
-                  "Native Android App on Google Play (High-performance PWA optimized for Egypt's messaging device base)",
-                  "Real-time Push Notifications (Drive promo re-orders, happy hours & loyalty alerts direct to customer phones)",
-                  "3 Branches & 15 Tables Included (Zero commission on unlimited dine-in, takeaway & delivery)",
-                  "Priority 24/7 & Ops Onboarding (Dedicated onboarding engineer and menu digitization within 48 hours)",
-                ].map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 text-xs text-cream/90"
-                  >
-                    <Check className="w-4 h-4 text-secondary shrink-0" />
-                    <span>{feature}</span>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h2
+                      className={cn(
+                        "text-2xl font-bold",
+                        plan.popular ? "text-secondary" : "text-ink",
+                      )}
+                    >
+                      {plan.name}
+                    </h2>
+                    <p className="mt-1 text-sm text-ink/70">{plan.tagline}</p>
                   </div>
-                ))}
-              </div>
-            </div>
+                  <span className="flex h-11 min-w-11 shrink-0 items-center justify-center gap-0.5 rounded-xl border border-sand bg-[#f6ebd9] px-2 text-secondary">
+                    {Array.from({ length: plan.houses }).map((_, i) => (
+                      <Home key={i} className="size-4" aria-hidden />
+                    ))}
+                  </span>
+                </div>
 
-            {/* زر الاشتراك */}
-            <div>
-              <Link
-                href="/register"
-                className="w-full py-3.5 rounded-xl bg-secondary text-cream text-xs font-bold hover:bg-secondary/90 transition shadow-md flex items-center justify-center"
-              >
-                Select Growth Plan →
-              </Link>
-              <p className="text-[10px] text-center text-cream/50 mt-3">
-                Recommended for roasteries & specialty chains
-              </p>
-            </div>
-          </div>
-        </div>
+                <ul className="mt-5 space-y-2 border-y border-black/10 py-4 text-sm text-ink">
+                  <li className="flex items-center gap-2">
+                    <Home className="size-4" aria-hidden />
+                    <span className={plan.popular ? "font-semibold" : ""}>
+                      {plan.branches}
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    {plan.unlimitedTables ? (
+                      <InfinityIcon className="size-4" aria-hidden />
+                    ) : (
+                      <Table className="size-4" aria-hidden />
+                    )}
+                    <span
+                      className={
+                        plan.popular || plan.unlimitedTables ? "font-semibold" : ""
+                      }
+                    >
+                      {plan.tables}
+                    </span>
+                  </li>
+                </ul>
 
-        {/* الميزات السفلية الإضافية (Footer Add-ons) */}
-        <div className="mt-10 bg-white border border-primary/10 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 text-left">
-          <div className="flex items-center gap-3">
-            <span className="p-2.5 rounded-xl bg-primary/5 text-primary text-lg">
-              <Handshake className="size-5" />
-            </span>
-            <div>
-              <div className="text-xs font-bold text-primary">
-                Need more than 3 branches or 15 tables?
-              </div>
-              <p className="text-[11px] text-primary/70">
-                Check out our Enterprise scale-up package: add unlimited tables,
-                kitchen display systems (KDS), and ERP inventory sync.
-              </p>
-            </div>
-          </div>
-          <button className="whitespace-nowrap px-4 py-2 rounded-xl border border-primary/20 text-xs font-semibold text-primary hover:bg-primary/5 transition">
-            Inquire for Enterprise Add-ons
-          </button>
-        </div>
-      </div>
-    </section>
+                <div className="mt-5 flex items-center gap-3">
+                  {isYearly && (
+                    <span className="whitespace-pre-line text-xs leading-tight text-ink/50 line-through">
+                      {oldLabel}
+                    </span>
+                  )}
+                  <span
+                    className={cn(
+                      "text-2xl font-bold leading-none lg:text-[1.7rem]",
+                      plan.popular ? "text-secondary" : "text-ink",
+                    )}
+                  >
+                    {priceLabel}
+                  </span>
+                  <span className="text-[11px] text-ink/70">/month</span>
+                  {isYearly && (
+                    <span className="ml-auto rounded-md bg-sand/60 px-2 py-1 text-[10px] font-bold text-primary">
+                      Save25%
+                    </span>
+                  )}
+                </div>
+                <p className="mt-3 text-[11px] text-ink/60">
+                  {isYearly
+                    ? `Billed annually (EGP ${fmt(plan.yearly * 12)}/year)`
+                    : "Billed monthly"}
+                </p>
+
+                <ul className="mt-5 flex-1 space-y-3">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-center gap-3 text-[13px] text-ink">
+                      <span
+                        className={cn(
+                          "grid size-4 shrink-0 place-items-center rounded-full text-white",
+                          plan.popular ? "bg-secondary" : "bg-primary",
+                        )}
+                      >
+                        <Check className="size-2.5" strokeWidth={3} aria-hidden />
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href="#"
+                  className={cn(
+                    "mt-8 inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors",
+                    plan.popular
+                      ? "bg-secondary hover:bg-primary"
+                      : "bg-primary hover:bg-secondary",
+                  )}
+                >
+                  {plan.cta}
+                  <ArrowRight className="size-4" aria-hidden />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Container>
+    </div>
   );
 }

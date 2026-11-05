@@ -23,17 +23,17 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-500 bg-white shadow-sm">
       <Container>
         <nav aria-label="Main" className="py-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <Logo />
 
-            <ul className="hidden items-center gap-10 text-base text-ink md:flex">
+            <ul className="hidden items-center gap-5 text-sm text-ink md:flex lg:gap-10 lg:text-base">
               {links.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
                     onClick={() => setActive(l.href)}
                     className={cn(
-                      "border-b-2 pb-1 transition-colors hover:text-secondary",
+                      "whitespace-nowrap border-b-2 pb-1 transition-colors hover:text-secondary",
                       active === l.href
                         ? "border-secondary font-semibold"
                         : "border-transparent",
@@ -46,7 +46,10 @@ export default function Navbar() {
             </ul>
 
             <div className="flex items-center gap-2">
-              <Button href="#pricing" className="hidden sm:inline-flex">
+              <Button
+                href="#pricing"
+                className="hidden whitespace-nowrap sm:inline-flex md:px-4 md:py-2 md:text-sm lg:px-6 lg:py-3 lg:text-base"
+              >
                 Get Started
               </Button>
               <button

@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Coffee } from "lucide-react";
 
 export default function Logo() {
   return (
@@ -8,7 +8,14 @@ export default function Logo() {
       aria-label="CafeHub home"
       className="flex items-center gap-2 text-xl font-bold tracking-tight text-ink"
     >
-      <Coffee className="size-6 text-secondary" aria-hidden />
+      <Image
+        src="/icons/nav/navicon.svg"
+        alt=""
+        width={30}
+        height={30}
+        className="h-9 w-auto"
+        priority
+      />
       CAFE HUB
     </Link>
   );
