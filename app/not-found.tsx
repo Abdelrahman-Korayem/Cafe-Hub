@@ -49,7 +49,7 @@ export default function NotFound() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 py-5">
+      <header className="relative z-10 py-5 ">
         <Container>
           <Logo />
         </Container>
