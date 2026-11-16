@@ -1,92 +1,45 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   ArrowUpRight,
-  Coffee,
   Eye,
   EyeOff,
   Lock,
   Mail,
-  Radio,
   ShieldCheck,
   Store,
-  Zap,
 } from "lucide-react";
+import AuthVisual from "@/app/_components/ui/AuthVisual";
+import FormField, { inputClass } from "@/app/_components/ui/FormField";
+import { registerSchema } from "@/lib/validation/auth";
+import { text, useZodForm } from "@/lib/validation/useZodForm";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+
+  const { errors, submitting, formProps, fieldProps } = useZodForm({
+    schema: registerSchema,
+    read: (data) => ({
+      cafeName: text(data, "cafeName"),
+      email: text(data, "email"),
+      password: text(data, "password"),
+      terms: data.get("terms") === "on",
+    }),
+    onValid: () => {
+      // TODO: send the values to your API before moving on
+      router.push("/Subscription");
+    },
+  });
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      {/* Left: visual panel */}
-      <section className="relative hidden overflow-hidden bg-primary lg:block">
-        <Image
-          src="/auth/register-bg.png"
-          alt=""
-          fill
-          priority
-          sizes="50vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
+      <AuthVisual />
 
-        <div className="relative z-10 flex h-full flex-col justify-between p-12 text-white">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 text-lg font-semibold">
-              <span className="grid size-10 place-items-center rounded-xl bg-white/15 ring-1 ring-white/20 backdrop-blur">
-                <Coffee className="size-5" aria-hidden />
-              </span>
-              CafeHub
-            </Link>
-            <span className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-wider ring-1 ring-white/20 backdrop-blur">
-              <span className="size-1.5 rounded-full bg-secondary" />
-              Specialty Roastery OS
-            </span>
-          </div>
-
-          <div>
-            <h1 className="text-4xl font-bold leading-tight">
-              Smarter Cafes,
-              <br />
-              Happier Guests.
-            </h1>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-white/80">
-              The comprehensive multi-tenant operations suite crafted for
-              specialty roasters, fast-casual bistros, and high-volume espresso
-              bars.
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <div className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 ring-1 ring-white/20 backdrop-blur">
-                <span className="grid size-9 place-items-center rounded-lg bg-white/10">
-                  <Radio className="size-4" aria-hidden />
-                </span>
-                <div>
-                  <p className="text-xs font-semibold">Active Roastery Session</p>
-                  <p className="mt-0.5 flex items-center gap-1.5 text-[10px] text-white/70">
-                    <span className="size-1.5 rounded-full bg-green-400" />
-                    Live Hub connected
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 ring-1 ring-white/20 backdrop-blur">
-                <Zap className="size-4 text-secondary" aria-hidden />
-                <p className="text-xs font-semibold">Ticket Latency</p>
-                <span className="rounded-md bg-white/15 px-2 py-1 text-[10px] font-semibold">
-                  &lt; 1.2s avg
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Right: form */}
       <section className="flex items-center bg-[#faf6ef] px-6 py-10 sm:px-12 lg:px-16">
         <div className="mx-auto w-full max-w-md">
           <div className="flex items-center justify-between border-b border-black/5 pb-4">
@@ -111,56 +64,43 @@ export default function RegisterPage() {
             get started.
           </p>
 
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="mt-8 space-y-5"
-          >
-            <div>
-              <label htmlFor="cafe-name" className="text-xs font-semibold text-ink">
-                Cafe Name
-              </label>
-              <div className="mt-2 flex items-center gap-3 rounded-lg border border-sand bg-[#f6efe4] px-3.5 py-3 focus-within:border-secondary">
-                <Store className="size-4 shrink-0 text-ink/50" aria-hidden />
-                <input
-                  id="cafe-name"
-                  type="text"
-                  required
-                  placeholder="e.g. Roastery Club Cafe"
-                  className="w-full bg-transparent text-sm text-ink placeholder:text-ink/40 focus:outline-none"
-                />
-              </div>
-            </div>
+          <form {...formProps} className="mt-8 space-y-5">
+            <FormField
+              id="cafeName"
+              label="Cafe Name"
+              icon={<Store className="size-4" aria-hidden />}
+              error={errors.cafeName}
+            >
+              <input
+                {...fieldProps("cafeName")}
+                type="text"
+                autoComplete="organization"
+                placeholder="e.g. Roastery Club Cafe"
+                className={inputClass}
+              />
+            </FormField>
 
-            <div>
-              <label htmlFor="email" className="text-xs font-semibold text-ink">
-                Work Email Address
-              </label>
-              <div className="mt-2 flex items-center gap-3 rounded-lg border border-sand bg-[#f6efe4] px-3.5 py-3 focus-within:border-secondary">
-                <Mail className="size-4 shrink-0 text-ink/50" aria-hidden />
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  placeholder="owner@cafehub.com"
-                  className="w-full bg-transparent text-sm text-ink placeholder:text-ink/40 focus:outline-none"
-                />
-              </div>
-            </div>
+            <FormField
+              id="email"
+              label="Work Email Address"
+              icon={<Mail className="size-4" aria-hidden />}
+              error={errors.email}
+            >
+              <input
+                {...fieldProps("email")}
+                type="email"
+                autoComplete="email"
+                placeholder="owner@cafehub.com"
+                className={inputClass}
+              />
+            </FormField>
 
-            <div>
-              <label htmlFor="password" className="text-xs font-semibold text-ink">
-                Security Password
-              </label>
-              <div className="mt-2 flex items-center gap-3 rounded-lg border border-sand bg-[#f6efe4] px-3.5 py-3 focus-within:border-secondary">
-                <Lock className="size-4 shrink-0 text-ink/50" aria-hidden />
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  minLength={8}
-                  placeholder="••••••••••••"
-                  className="w-full bg-transparent text-sm text-ink placeholder:text-ink/40 focus:outline-none"
-                />
+            <FormField
+              id="password"
+              label="Security Password"
+              icon={<Lock className="size-4" aria-hidden />}
+              error={errors.password}
+              action={
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
@@ -173,30 +113,53 @@ export default function RegisterPage() {
                     <Eye className="size-4" />
                   )}
                 </button>
-              </div>
+              }
+            >
+              <input
+                {...fieldProps("password")}
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                placeholder="••••••••••••"
+                className={inputClass}
+              />
+            </FormField>
+
+            <div className="pt-6">
+              <label className="flex items-center gap-2 text-xs text-ink">
+                <input
+                  {...fieldProps("terms")}
+                  type="checkbox"
+                  className="size-4 rounded accent-primary"
+                />
+                I agree to Terms &amp; Cafe Service SLA
+              </label>
+              {errors.terms && (
+                <p
+                  id="terms-error"
+                  role="alert"
+                  className="mt-1.5 text-xs text-red-700"
+                >
+                  {errors.terms}
+                </p>
+              )}
             </div>
 
-            <label className="flex items-center gap-2 pt-6 text-xs text-ink">
-              <input
-                type="checkbox"
-                required
-                className="size-4 rounded accent-primary"
-              />
-              I agree to Terms &amp; Cafe Service SLA
-            </label>
-
-            <Link
-              href="/Subscription"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-secondary"
+            <button
+              type="submit"
+              disabled={submitting}
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-secondary disabled:opacity-60"
             >
               Continue to Setup &amp; Payment
               <ArrowRight className="size-4" aria-hidden />
-            </Link>
+            </button>
           </form>
 
           <p className="mt-6 text-center text-xs text-ink">
             Already have an active account?{" "}
-            <Link href="/sign-in" className="font-bold text-secondary hover:text-primary">
+            <Link
+              href="/sign-in"
+              className="font-bold text-secondary hover:text-primary"
+            >
               Sign In
             </Link>
           </p>
