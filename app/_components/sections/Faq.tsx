@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import Container from "@/app/_components/ui/Container";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 const faqs = [
   {
@@ -30,6 +32,7 @@ const faqs = [
 ];
 
 export default function Faq() {
+  const { t } = useLocale();
   return (
     <section id="faq" className="relative overflow-hidden py-16">
       {/* Decorations */}
@@ -46,7 +49,7 @@ export default function Faq() {
 
       <Container className="relative z-10">
         <h2 className="text-center text-3xl font-bold text-ink sm:text-4xl">
-          Frequently Asked Questions
+          {t("Frequently Asked Questions")}
         </h2>
 
         <div className="mx-auto mt-12 grid max-w-5xl items-start gap-x-8 gap-y-5 md:grid-cols-2">
@@ -56,13 +59,13 @@ export default function Faq() {
               className="group rounded-lg bg-white px-4 py-3 shadow-md ring-1 ring-black/5"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden">
-                {q}
+                {t(q)}
                 <Plus
                   className="size-4 shrink-0 transition-transform group-open:rotate-45"
                   aria-hidden
                 />
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink/75">{a}</p>
+              <p className="mt-3 text-sm leading-relaxed text-ink/75">{t(a)}</p>
             </details>
           ))}
         </div>

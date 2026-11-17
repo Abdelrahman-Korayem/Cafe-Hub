@@ -1,5 +1,10 @@
+"use client";
+
+import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import LanguageSwitcher from "@/app/_components/ui/LanguageSwitcher";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   searchParams: Promise<{ email?: string }>;
@@ -23,8 +28,9 @@ const steps = [
   },
 ] as const;
 
-export default async function PendingApprovalPage({ searchParams }: Props) {
-  const { email } = await searchParams;
+export default function PendingApprovalPage({ searchParams }: Props) {
+  const { email } = use(searchParams);
+  const { t, direction } = useLocale();
 
   return (
     <main className="grid min-h-screen grid-cols-1 bg-[#fbf7ef] lg:grid-cols-[1.35fr_1fr]">
@@ -49,13 +55,12 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
 
           <div className="max-w-md">
             <h2 className="text-4xl font-semibold leading-tight">
-              Smarter Cafes,
+              {t("Smarter Cafes,")}
               <br />
-              Happier Guests.
+              {t("Happier Guests.")}
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/80">
-              The multi-tenant operations suite crafted for specialty roasters,
-              fast-casual bistros, and high-volume espresso bars.
+              {t("The multi-tenant operations suite crafted for specialty roasters, fast-casual bistros, and high-volume espresso bars.")}
             </p>
           </div>
         </div>
@@ -66,14 +71,17 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
         <div className="w-full max-w-md">
           <div className="flex items-center justify-between">
             <span className="rounded-full border border-sand bg-sand/40 px-3 py-1 text-xs font-medium text-secondary">
-              Cafe Owner Portal
+              {t("Cafe Owner Portal")}
             </span>
+            <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <Link
               href="/"
               className="text-xs text-secondary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
-              Back to main site
+              {t("Back to main site")}
             </Link>
+            </div>
           </div>
 
           <div
@@ -84,17 +92,17 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
           </div>
 
           <h1 className="mt-6 text-2xl font-semibold text-ink">
-            Your account is waiting for approval
+            {t("Your account is waiting for approval")}
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-ink/70">
-            Thanks for subscribing to CafeHub.{" "}
+            {t("Thanks for subscribing to CafeHub.")} {" "}
             {email ? (
               <>
-                We will send the approval email to{" "}
+                {t("We will send the approval email to")} {" "}
                 <span className="font-semibold text-ink">{email}</span>.
               </>
             ) : (
-              "We will send you an email once your account is approved."
+              t("We will send you an email once your account is approved.")
             )}
           </p>
 
@@ -103,7 +111,7 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
               <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0">
                 {i < steps.length - 1 && (
                   <span
-                    className={`absolute left-[11px] top-6 h-[calc(100%-1.5rem)] w-px ${
+                    className={`absolute top-6 h-[calc(100%-1.5rem)] w-px ${direction === "rtl" ? "right-[11px]" : "left-[11px]"} ${
                       step.status === "done" ? "bg-primary" : "bg-sand"
                     }`}
                     aria-hidden="true"
@@ -118,10 +126,10 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
                       step.status === "upcoming" ? "text-ink/50" : "text-ink"
                     }`}
                   >
-                    {step.title}
+                    {t(step.title)}
                   </p>
                   <p className="mt-0.5 text-xs leading-relaxed text-ink/60">
-                    {step.text}
+                    {t(step.text)}
                   </p>
                 </div>
               </li>
@@ -133,15 +141,15 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
               href="/"
               className="flex h-11 w-full items-center justify-center rounded-lg bg-primary text-sm font-medium text-white transition-colors hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
-              Back to home
+              {t("Back to home")}
             </Link>
             <p className="text-center text-xs text-ink/60">
-              Did not get an email after 24 hours?{" "}
+              {t("Did not get an email after 24 hours?")} {" "}
               <a
                 href="mailto:support@cafehub.com"
                 className="font-medium text-secondary underline-offset-4 hover:underline"
               >
-                Contact support
+                {t("Contact support")}
               </a>
             </p>
           </div>
@@ -152,13 +160,14 @@ export default async function PendingApprovalPage({ searchParams }: Props) {
 }
 
 function StepMarker({ status }: { status: "done" | "current" | "upcoming" }) {
+  const { t } = useLocale();
   if (status === "done") {
     return (
       <span className="relative z-10 grid size-6 shrink-0 place-items-center rounded-full bg-primary text-white">
         <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="m5 12 5 5L20 7" />
         </svg>
-        <span className="sr-only">Completed</span>
+        <span className="sr-only">{t("Completed")}</span>
       </span>
     );
   }
@@ -167,14 +176,14 @@ function StepMarker({ status }: { status: "done" | "current" | "upcoming" }) {
     return (
       <span className="relative z-10 grid size-6 shrink-0 place-items-center rounded-full border-2 border-secondary bg-[#fbf7ef]">
         <span className="size-2 rounded-full bg-secondary motion-safe:animate-pulse" />
-        <span className="sr-only">In progress</span>
+        <span className="sr-only">{t("In progress")}</span>
       </span>
     );
   }
 
   return (
     <span className="relative z-10 size-6 shrink-0 rounded-full border-2 border-sand bg-[#fbf7ef]">
-      <span className="sr-only">Pending</span>
+      <span className="sr-only">{t("Pending")}</span>
     </span>
   );
 }

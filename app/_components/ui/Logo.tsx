@@ -1,11 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function Logo() {
+  const { t } = useLocale();
   return (
     <Link
       href="/"
-      aria-label="CafeHub home"
+      aria-label={t("CafeHub home")}
       className="flex items-center gap-2 text-xl font-bold tracking-tight text-ink"
     >
       <Image

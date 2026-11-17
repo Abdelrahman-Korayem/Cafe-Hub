@@ -22,7 +22,7 @@ export default function Button({
       )}
     >
       {children}
-      {arrow && <ArrowRight className="size-4" aria-hidden />}
+      {arrow && <ArrowRight className="directional-arrow size-4" aria-hidden />}
     </Link>
   );
 }

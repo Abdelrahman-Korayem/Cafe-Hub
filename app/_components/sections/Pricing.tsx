@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import { ArrowRight, Check, Home, Infinity as InfinityIcon, Table } from "lucide-react";
-import Container from "@/app/_components/ui/Container";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { formatCurrency } from "@/lib/i18n/currency";
 
 const plans = [
   {
@@ -11,9 +13,9 @@ const plans = [
     branches: "1 branch",
     tables: "Up to 20 tables",
     unlimitedTables: false,
-    oldPrice: "1,200\nEGP",
-    price: "900 / EGP",
-    yearly: "10,800",
+    oldPrice: 1200,
+    price: 900,
+    yearly: 10800,
     cta: "Choose Starter",
     popular: false,
     features: [
@@ -32,9 +34,9 @@ const plans = [
     branches: "Up to 2 branches",
     tables: "50 tables per branch",
     unlimitedTables: false,
-    oldPrice: "EGP\n2,400",
-    price: "EGP 1,800",
-    yearly: "21,600",
+    oldPrice: 2400,
+    price: 1800,
+    yearly: 21600,
     cta: "Choose Growth",
     popular: true,
     features: [
@@ -55,9 +57,9 @@ const plans = [
     branches: "3+ branches",
     tables: "Unlimited tables",
     unlimitedTables: true,
-    oldPrice: "4,800\nEGP",
-    price: "3,600 / EGP",
-    yearly: "43,200",
+    oldPrice: 4800,
+    price: 3600,
+    yearly: 43200,
     cta: "Choose Pro",
     popular: false,
     features: [
@@ -74,6 +76,7 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const { t, locale, direction } = useLocale();
   return (
     <section id="pricing" className="relative overflow-hidden py-16">
       {/* Decorations */}
@@ -108,10 +111,10 @@ export default function Pricing() {
       
         <div className="text-center">
           <h2 className="text-3xl font-bold text-ink sm:text-4xl">
-            Simple Transparent Pricing
+            {t("Simple Transparent Pricing")}
           </h2>
           <p className="mt-4 text-lg font-semibold text-ink">
-            Choose the Plan your cafe’s Needs
+            {t("Choose the Plan your cafe’s Needs")}
           </p>
         </div>
 
@@ -127,7 +130,7 @@ export default function Pricing() {
             >
               {plan.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-secondary px-5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                  Most Popular
+                  {t("Most Popular")}
                 </span>
               )}
 
@@ -139,9 +142,9 @@ export default function Pricing() {
                       plan.popular ? "text-secondary" : "text-ink",
                     )}
                   >
-                    {plan.name}
+                    {t(plan.name)}
                   </h3>
-                  <p className="mt-1 text-sm text-ink/70">{plan.tagline}</p>
+                  <p className="mt-1 text-sm text-ink/70">{t(plan.tagline)}</p>
                 </div>
                 <span className="flex h-11 min-w-11 shrink-0 items-center justify-center gap-0.5 rounded-xl border border-sand bg-[#f6ebd9] px-2 text-secondary">
                   {Array.from({ length: plan.houses }).map((_, i) => (
@@ -154,7 +157,7 @@ export default function Pricing() {
                 <li className="flex items-center gap-2">
                   <Home className="size-4" aria-hidden />
                   <span className={plan.popular ? "font-semibold" : ""}>
-                    {plan.branches}
+                    {t(plan.branches)}
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
@@ -164,25 +167,25 @@ export default function Pricing() {
                     <Table className="size-4" aria-hidden />
                   )}
                   <span className={plan.popular || plan.unlimitedTables ? "font-semibold" : ""}>
-                    {plan.tables}
+                    {t(plan.tables)}
                   </span>
                 </li>
               </ul>
 
               <div className="mt-5 flex items-center gap-3">
                 <span className="whitespace-pre-line text-xs leading-tight text-ink/50 line-through">
-                  {plan.oldPrice}
+                  <bdi dir={direction}>{formatCurrency(locale, plan.oldPrice, true)}</bdi>
                 </span>
                 <span className="text-2xl font-bold leading-none text-ink lg:text-[1.7rem]">
-                  {plan.price}
+                  <bdi dir={direction}>{formatCurrency(locale, plan.price)}</bdi>
                 </span>
-                <span className="text-[11px] text-ink/70">/month</span>
-                <span className="ml-auto rounded-md bg-sand/60 px-2 py-1 text-[10px] font-bold text-primary">
-                  Save25%
+                <span className="text-[11px] text-ink/70">{t("/month")}</span>
+                <span className="ms-auto rounded-md bg-sand/60 px-2 py-1 text-[10px] font-bold text-primary">
+                  {t("Save25%")}
                 </span>
               </div>
               <p className="mt-3 text-[11px] text-ink/60">
-                Billed annually (EGP {plan.yearly}/year)
+                {t("Billed annually")} (<bdi dir={direction}>{formatCurrency(locale, plan.yearly)}</bdi>/{t("year")})
               </p>
 
               <ul className="mt-5 flex-1 space-y-3">
@@ -196,7 +199,7 @@ export default function Pricing() {
                     >
                       <Check className="size-2.5" strokeWidth={3} aria-hidden />
                     </span>
-                    {f}
+                    {t(f)}
                   </li>
                 ))}
               </ul>
@@ -210,7 +213,7 @@ export default function Pricing() {
                     : "bg-primary hover:bg-secondary",
                 )}
               >
-                {plan.cta}
+                {t(plan.cta)}
                 <ArrowRight className="size-4" aria-hidden />
               </a>
             </li>

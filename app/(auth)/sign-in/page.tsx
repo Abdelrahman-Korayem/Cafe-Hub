@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import LanguageSwitcher from "@/app/_components/ui/LanguageSwitcher";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -19,6 +21,7 @@ import { loginSchema } from "@/lib/validation/auth";
 import { text, useZodForm } from "@/lib/validation/useZodForm";
 
 export default function SignInPage() {
+  const { t, direction } = useLocale();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,62 +47,65 @@ export default function SignInPage() {
           <div className="flex items-center justify-between border-b border-black/5 pb-4">
             <span className="flex items-center gap-2 rounded-full bg-sand/50 px-3 py-1.5 text-[11px] font-semibold text-primary">
               <span className="size-1.5 rounded-full bg-secondary" />
-              Staff &amp; Owner Portal
+              {t("Staff & Owner Portal")}
             </span>
+            <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <Link
               href="/"
               className="flex items-center gap-1 text-[11px] font-semibold text-secondary hover:text-primary"
             >
-              Back to main site
-              <ArrowUpRight className="size-3" aria-hidden />
+              {t("Back to main site")}
+              <ArrowUpRight className={`size-3 ${direction === "rtl" ? "-scale-x-100" : ""}`} aria-hidden />
             </Link>
+            </div>
           </div>
 
-          <h2 className="mt-6 text-3xl font-bold text-primary">Welcome Back</h2>
+          <h2 className="mt-6 text-3xl font-bold text-primary">{t("Welcome Back")}</h2>
           <p className="mt-2 text-sm text-ink/70">
-            Enter your account credentials to access your cafe management
-            workspace.
+            {t("Enter your account credentials to access your cafe management workspace.")}
           </p>
 
           <form {...formProps} className="mt-10 space-y-5 lg:mt-20">
             <FormField
               id="identifier"
-              label="Work Email or Staff Username"
+              label={t("Work Email or Staff Username")}
               icon={<Mail className="size-4" aria-hidden />}
               hint={
                 <span className="text-[10px] text-ink/50">
-                  e.g. roastery admin
+                  {t("e.g. roastery admin")}
                 </span>
               }
-              error={errors.identifier}
+              error={errors.identifier ? t(errors.identifier) : undefined}
             >
               <input
                 {...fieldProps("identifier")}
                 type="text"
+                dir="auto"
                 autoComplete="username"
-                placeholder="owner@cafehub.com or captain1"
+                placeholder={t("owner@cafehub.com or captain1")}
                 className={inputClass}
               />
             </FormField>
 
             <FormField
               id="password"
-              label="Security Password"
+              label={t("Security Password")}
               icon={<Lock className="size-4" aria-hidden />}
               hint={
                 <Link
                   href="#"
                   className="text-[11px] font-semibold text-secondary hover:text-primary"
                 >
-                  Forgot password?
+                  {t("Forgot password?")}
                 </Link>
               }
-              error={errors.password}
+              error={errors.password ? t(errors.password) : undefined}
               action={
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-label={showPassword ? t("Hide password") : t("Show password")}
                   className="text-ink/50 hover:text-ink"
                 >
                   {showPassword ? (
@@ -113,6 +119,7 @@ export default function SignInPage() {
               <input
                 {...fieldProps("password")}
                 type={showPassword ? "text" : "password"}
+                dir="ltr"
                 autoComplete="current-password"
                 placeholder="••••••••••••"
                 className={inputClass}
@@ -127,11 +134,11 @@ export default function SignInPage() {
                   defaultChecked
                   className="size-4 rounded accent-primary"
                 />
-                Remember device token
+                {t("Remember device token")}
               </label>
               <span className="flex items-center gap-1.5 rounded-full bg-sand/50 px-3 py-1.5 text-[10px] font-semibold text-primary">
                 <MapPin className="size-3" aria-hidden />
-                All 4 Roastery Hubs
+                {t("All 4 Roastery Hubs")}
               </span>
             </div>
 
@@ -140,30 +147,30 @@ export default function SignInPage() {
               disabled={submitting}
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-secondary disabled:opacity-60"
             >
-              Sign In to Workspace
-              <ArrowRight className="size-4" aria-hidden />
+              {t("Sign In to Workspace")}
+              <ArrowRight className={`size-4 ${direction === "rtl" ? "rotate-180" : ""}`} aria-hidden />
             </button>
           </form>
 
           <p className="mt-6 text-center text-xs text-ink">
-            Want to register a new cafe?{" "}
+            {t("Want to register a new cafe?")} {" "}
             <Link
               href="/register"
               className="font-bold text-secondary hover:text-primary"
             >
-              Join as Cafe Owner
+              {t("Join as Cafe Owner")}
             </Link>
           </p>
 
           <div className="mt-4 flex items-center justify-center gap-3 border-t border-black/5 pt-4 text-[11px] text-ink/60">
             <span className="flex items-center gap-1.5">
               <Lock className="size-3" aria-hidden />
-              256-Bit SSL Encrypted
+              {t("256-Bit SSL Encrypted")}
             </span>
             <span aria-hidden>•</span>
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="size-3" aria-hidden />
-              SOC-2 Compliant
+              {t("SOC-2 Compliant")}
             </span>
           </div>
         </div>

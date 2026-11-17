@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import Container from "@/app/_components/ui/Container";
 import { cn } from "@/lib/cn";
+import LanguageSwitcher from "@/app/_components/ui/LanguageSwitcher";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { formatCurrency } from "@/lib/i18n/currency";
 
 type Billing = "monthly" | "yearly";
 
@@ -27,7 +30,6 @@ const plans = [
     unlimitedTables: false,
     monthly: 1000,
     yearly: 750,
-    priceStyle: "suffix", // 750 / EGP
     cta: "Choose Starter",
     popular: false,
     features: [
@@ -48,7 +50,6 @@ const plans = [
     unlimitedTables: false,
     monthly: 2000,
     yearly: 1500,
-    priceStyle: "prefix", // EGP 1,500
     cta: "Choose Growth",
     popular: true,
     features: [
@@ -71,7 +72,6 @@ const plans = [
     unlimitedTables: true,
     monthly: 3000,
     yearly: 2250,
-    priceStyle: "suffix",
     cta: "Choose Pro",
     popular: false,
     features: [
@@ -87,9 +87,8 @@ const plans = [
   },
 ] as const;
 
-const fmt = (n: number) => n.toLocaleString("en-US");
-
 export default function SubscriptionPage() {
+  const { t, locale, direction } = useLocale();
   const [billing, setBilling] = useState<Billing>("yearly");
   const isYearly = billing === "yearly";
 
@@ -101,19 +100,20 @@ export default function SubscriptionPage() {
           <Link
             href="/"
             className="flex items-center gap-3 text-2xl font-bold text-ink"
-            aria-label="CafeHub home"
+            aria-label={t("CafeHub home")}
           >
             <Coffee className="size-8 text-secondary" aria-hidden />
             CAFE HUB
           </Link>
-          <nav aria-label="Secondary" className="flex items-center gap-6 text-xs text-ink/80">
+          <nav aria-label={t("Secondary")} className="flex flex-wrap items-center gap-3 text-xs text-ink/80 sm:gap-6">
+            <LanguageSwitcher />
             <Link href="/" className="flex items-center gap-1.5 hover:text-secondary">
-              <ArrowLeft className="size-3.5" aria-hidden />
-              Back to main site
+              <ArrowLeft className={`size-3.5 ${direction === "rtl" ? "rotate-180" : ""}`} aria-hidden />
+              {t("Back to main site")}
             </Link>
             <Link href="#" className="flex items-center gap-1.5 hover:text-secondary">
               <CircleHelp className="size-3.5" aria-hidden />
-              Help &amp; Support
+              {t("Help & Support")}
             </Link>
           </nav>
         </Container>
@@ -122,13 +122,13 @@ export default function SubscriptionPage() {
       <Container>
         <div className="mt-16 text-center">
           <h1 className="text-xl font-bold text-ink sm:text-2xl">
-            Choose the Plan your cafe’s Needs
+            {t("Choose the Plan your cafe’s Needs")}
           </h1>
 
           {/* Billing toggle */}
           <div
             role="group"
-            aria-label="Billing period"
+            aria-label={t("Billing period")}
             className="mx-auto mt-6 inline-flex rounded-full bg-[#fdf6e3] p-1 ring-1 ring-sand"
           >
             <button
@@ -140,7 +140,7 @@ export default function SubscriptionPage() {
                 !isYearly ? "bg-primary text-white" : "text-ink",
               )}
             >
-              Monthly
+              {t("Monthly")}
             </button>
             <button
               type="button"
@@ -151,9 +151,9 @@ export default function SubscriptionPage() {
                 isYearly ? "bg-primary text-white" : "text-ink",
               )}
             >
-              Yearly
+              {t("Yearly")}
               <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-white">
-                Save 25%
+                {t("Save 25%")}
               </span>
             </button>
           </div>
@@ -162,14 +162,8 @@ export default function SubscriptionPage() {
         <ul className="mx-auto mt-14 grid max-w-5xl items-stretch gap-5 md:grid-cols-3">
           {plans.map((plan) => {
             const amount = isYearly ? plan.yearly : plan.monthly;
-            const priceLabel =
-              plan.priceStyle === "prefix"
-                ? `EGP ${fmt(amount)}`
-                : `${fmt(amount)} / EGP`;
-            const oldLabel =
-              plan.priceStyle === "prefix"
-                ? `EGP\n${fmt(plan.monthly)}`
-                : `${fmt(plan.monthly)}\nEGP`;
+            const priceLabel = formatCurrency(locale, amount);
+            const oldLabel = formatCurrency(locale, plan.monthly, true);
 
             return (
               <li
@@ -182,7 +176,7 @@ export default function SubscriptionPage() {
               >
                 {plan.popular && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-secondary px-5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                    Most Popular
+                    {t("Most Popular")}
                   </span>
                 )}
 
@@ -194,9 +188,9 @@ export default function SubscriptionPage() {
                         plan.popular ? "text-secondary" : "text-ink",
                       )}
                     >
-                      {plan.name}
+                      {t(plan.name)}
                     </h2>
-                    <p className="mt-1 text-sm text-ink/70">{plan.tagline}</p>
+                    <p className="mt-1 text-sm text-ink/70">{t(plan.tagline)}</p>
                   </div>
                   <span className="flex h-11 min-w-11 shrink-0 items-center justify-center gap-0.5 rounded-xl border border-sand bg-[#f6ebd9] px-2 text-secondary">
                     {Array.from({ length: plan.houses }).map((_, i) => (
@@ -209,7 +203,7 @@ export default function SubscriptionPage() {
                   <li className="flex items-center gap-2">
                     <Home className="size-4" aria-hidden />
                     <span className={plan.popular ? "font-semibold" : ""}>
-                      {plan.branches}
+                      {t(plan.branches)}
                     </span>
                   </li>
                   <li className="flex items-center gap-2">
@@ -223,7 +217,7 @@ export default function SubscriptionPage() {
                         plan.popular || plan.unlimitedTables ? "font-semibold" : ""
                       }
                     >
-                      {plan.tables}
+                      {t(plan.tables)}
                     </span>
                   </li>
                 </ul>
@@ -231,7 +225,7 @@ export default function SubscriptionPage() {
                 <div className="mt-5 flex items-center gap-3">
                   {isYearly && (
                     <span className="whitespace-pre-line text-xs leading-tight text-ink/50 line-through">
-                      {oldLabel}
+                      <bdi dir={direction}>{oldLabel}</bdi>
                     </span>
                   )}
                   <span
@@ -240,19 +234,23 @@ export default function SubscriptionPage() {
                       plan.popular ? "text-secondary" : "text-ink",
                     )}
                   >
-                    {priceLabel}
+                    <bdi dir={direction}>{priceLabel}</bdi>
                   </span>
-                  <span className="text-[11px] text-ink/70">/month</span>
+                  <span className="text-[11px] text-ink/70">{t("/month")}</span>
                   {isYearly && (
-                    <span className="ml-auto rounded-md bg-sand/60 px-2 py-1 text-[10px] font-bold text-primary">
-                      Save25%
+                  <span className="ms-auto rounded-md bg-sand/60 px-2 py-1 text-[10px] font-bold text-primary">
+                      {t("Save25%")}
                     </span>
                   )}
                 </div>
                 <p className="mt-3 text-[11px] text-ink/60">
-                  {isYearly
-                    ? `Billed annually (EGP ${fmt(plan.yearly * 12)}/year)`
-                    : "Billed monthly"}
+                  {isYearly ? (
+                    <>
+                      {t("Billed annually")} (<bdi dir={direction}>{formatCurrency(locale, plan.yearly * 12)}</bdi>/{t("year")})
+                    </>
+                  ) : (
+                    t("Billed monthly")
+                  )}
                 </p>
 
                 <ul className="mt-5 flex-1 space-y-3">
@@ -266,7 +264,7 @@ export default function SubscriptionPage() {
                       >
                         <Check className="size-2.5" strokeWidth={3} aria-hidden />
                       </span>
-                      {f}
+                      {t(f)}
                     </li>
                   ))}
                 </ul>
@@ -280,8 +278,8 @@ export default function SubscriptionPage() {
                       : "bg-primary hover:bg-secondary",
                   )}
                 >
-                  {plan.cta}
-                  <ArrowRight className="size-4" aria-hidden />
+                  {t(plan.cta)}
+                  <ArrowRight className={`size-4 ${direction === "rtl" ? "rotate-180" : ""}`} aria-hidden />
                 </Link>
               </li>
             );

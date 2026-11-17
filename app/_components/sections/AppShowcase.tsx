@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import Container from "@/app/_components/ui/Container";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 const stats = [
   { icon: "/icons/stats/bean.svg", value: "500+", label: "Cafes World Wide" },
@@ -17,24 +19,27 @@ const stats = [
 ];
 
 function StoreButtons({ className }: { className?: string }) {
+  const { t, locale } = useLocale();
   return (
     <div className={className}>
-      <a href="#" aria-label="Download on the App Store" className="block">
+      <a href="#" aria-label={t("Download on the App Store")} className="block">
         <Image
-          src="/app/app-store.png"
-          alt="Download on the App Store"
+          src={locale === "ar" ? "/app/app-store-ar.svg" : "/app/app-store.png"}
+          alt={t("Download on the App Store")}
           width={400}
           height={120}
-          className="h-12 w-auto md:h-11 lg:h-12"
+          sizes="160px"
+          className="h-12 w-auto object-contain md:h-11 lg:h-12"
         />
       </a>
-      <a href="#" aria-label="Get it on Google Play" className="block">
+      <a href="#" aria-label={t("Get it on Google Play")} className="block">
         <Image
-          src="/app/google-play.png"
-          alt="Get it on Google Play"
+          src={locale === "ar" ? "/app/google-play-ar.svg" : "/app/google-play.png"}
+          alt={t("Get it on Google Play")}
           width={400}
           height={120}
-          className="h-12 w-auto md:h-11 lg:h-12"
+          sizes="160px"
+          className="h-12 w-auto object-contain md:h-11 lg:h-12"
         />
       </a>
     </div>
@@ -42,6 +47,7 @@ function StoreButtons({ className }: { className?: string }) {
 }
 
 export default function AppShowcase() {
+  const { t } = useLocale();
   return (
     <section className="relative overflow-hidden py-12 md:py-16">
       {/* Decoration (tablet and up) */}
@@ -58,11 +64,10 @@ export default function AppShowcase() {
       <Container className="relative z-10">
         <div className="md:mx-auto md:max-w-2xl md:text-center">
           <h2 className="text-2xl font-bold leading-tight text-ink md:text-3xl lg:text-4xl">
-            A Better Way to Run Your Café
+            {t("A Better Way to Run Your Café")}
           </h2>
           <p className="mt-3 text-base text-ink/85 md:mt-5">
-            CafeHub helps you spend less time managing operations and more time
-            creating memorable customer experiences.
+            {t("CafeHub helps you spend less time managing operations and more time creating memorable customer experiences.")}
           </p>
         </div>
 
@@ -83,7 +88,7 @@ export default function AppShowcase() {
                   {value}
                 </p>
                 <p className="mt-1 text-[11px] leading-tight text-ink/70">
-                  {label}
+                  {t(label)}
                 </p>
               </div>
             </li>
@@ -127,13 +132,10 @@ export default function AppShowcase() {
             {/* Text */}
             <div className="md:order-2">
               <h3 className="text-2xl font-bold leading-tight text-ink md:text-3xl lg:text-4xl">
-                A Better Café Experience
-                <br className="hidden md:block" /> Starts Here
+                {t("A Better Café Experience Starts Here")}
               </h3>
               <p className="mt-3 max-w-lg text-base leading-relaxed text-ink/80 md:mt-4">
-                Let your customers explore your menu, discover their favorites,
-                place orders, and book tables through a smooth, convenient
-                mobile experience.
+                {t("Let your customers explore your menu, discover their favorites, place orders, and book tables through a smooth, convenient mobile experience.")}
               </p>
 
               <StoreButtons className="mt-8 hidden items-center gap-3 md:flex" />
@@ -143,7 +145,7 @@ export default function AppShowcase() {
             <div className="relative mx-auto aspect-[1/0.95] w-full max-w-[600px] md:order-1">
               <Image
                 src="/app/phones.png"
-                alt="CafeHub mobile app screens"
+                alt={t("CafeHub mobile app screens")}
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-contain"
