@@ -24,3 +24,707 @@ body {
 html[dir="rtl"] .directional-arrow {
   transform: scaleX(-1);
 }
+
+
+/* Hero animations */
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes hero-fade-scale {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.hero-animate {
+  animation: hero-fade-up 700ms ease-out both;
+}
+
+.hero-animate-delay-1 {
+  animation-delay: 150ms;
+}
+
+.hero-animate-delay-2 {
+  animation-delay: 300ms;
+}
+
+.hero-animate-delay-3 {
+  animation-delay: 450ms;
+}
+
+.hero-visual-animate {
+  animation: hero-fade-scale 900ms ease-out both;
+}
+
+.hero-visual-delay-1 {
+  animation-delay: 200ms;
+}
+
+.hero-float {
+  animation: hero-float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate,
+  .hero-animate-delay-1,
+  .hero-animate-delay-2,
+  .hero-animate-delay-3,
+  .hero-visual-animate,
+  .hero-visual-delay-1,
+  .hero-float {
+    animation: none;
+  }
+}
+
+/* Continuous text movement */
+@keyframes hero-text-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+
+/* Continuous device movement */
+@keyframes hero-device-float {
+  0%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: 0 -10px;
+    rotate: 1deg;
+  }
+}
+
+/* Podium movement */
+@keyframes hero-podium-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+.hero-text-float {
+  animation: hero-text-float 4s ease-in-out infinite;
+}
+
+.hero-device-float {
+  animation: hero-device-float 4s ease-in-out infinite;
+}
+
+.hero-podium-float {
+  animation: hero-podium-float 5s ease-in-out infinite;
+}
+
+/* Keep the entrance animation and continuous movement separate */
+@media (prefers-reduced-motion: reduce) {
+  .hero-text-float,
+  .hero-device-float,
+  .hero-podium-float {
+    animation: none;
+  }
+}
+
+
+
+/* FAQ Scroll Animations */
+
+@keyframes faq-title-reveal {
+  from {
+    opacity: 0;
+    translate: 0 -45px;
+    scale: 0.9;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes faq-item-reveal {
+  from {
+    opacity: 0;
+    translate: 0 55px;
+    scale: 0.94;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes faq-decoration-float {
+  0%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  50% {
+    translate: 0 -20px;
+    rotate: 5deg;
+  }
+}
+
+.faq-title {
+  opacity: 0;
+}
+
+.faq-item {
+  opacity: 0;
+}
+
+.faq-section.is-visible .faq-title {
+  animation: faq-title-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.faq-section.is-visible .faq-item {
+  animation: faq-item-reveal 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.faq-section.is-visible .faq-decoration {
+  animation: faq-decoration-float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-title,
+  .faq-item {
+    opacity: 1;
+  }
+
+  .faq-section.is-visible .faq-title,
+  .faq-section.is-visible .faq-item,
+  .faq-section.is-visible .faq-decoration {
+    animation: none;
+  }
+}
+
+/* Features animations */
+
+@keyframes features-heading-reveal {
+  from {
+    opacity: 0;
+    translate: 0 -35px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes features-card-reveal {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+    scale: 0.94;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes features-card-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -9px;
+  }
+}
+
+@keyframes features-icon-bounce {
+  0%, 100% {
+    scale: 1;
+    rotate: 0deg;
+  }
+
+  50% {
+    scale: 1.12;
+    rotate: 5deg;
+  }
+}
+
+@keyframes features-decoration-float {
+  0%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  50% {
+    translate: 0 -18px;
+    rotate: 6deg;
+  }
+}
+
+.features-heading,
+.features-description,
+.features-card {
+  opacity: 0;
+}
+
+.features-section.is-visible .features-heading {
+  animation: features-heading-reveal 900ms ease-out both;
+}
+
+.features-section.is-visible .features-description {
+  animation: features-heading-reveal 900ms 150ms ease-out both;
+}
+
+.features-section.is-visible .features-card {
+  animation:
+    features-card-reveal 800ms ease-out both,
+    features-card-float 3s 1s ease-in-out infinite;
+}
+
+.features-section.is-visible .features-icon {
+  animation: features-icon-bounce 2s ease-in-out infinite;
+}
+
+.features-section.is-visible .features-decoration {
+  animation: features-decoration-float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .features-heading,
+  .features-description,
+  .features-card {
+    opacity: 1;
+  }
+
+  .features-section.is-visible .features-heading,
+  .features-section.is-visible .features-description,
+  .features-section.is-visible .features-card,
+  .features-section.is-visible .features-icon,
+  .features-section.is-visible .features-decoration {
+    animation: none;
+  }
+}
+
+/* Pricing Scroll Animations */
+
+@keyframes pricing-heading-reveal {
+  from {
+    opacity: 0;
+    translate: 0 -40px;
+    scale: 0.94;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes pricing-card-reveal {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes pricing-card-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes pricing-decoration-float {
+  0%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  50% {
+    translate: 0 -18px;
+    rotate: 5deg;
+  }
+}
+
+.pricing-heading,
+.pricing-card {
+  opacity: 0;
+}
+
+.pricing-section.is-visible .pricing-heading {
+  animation: pricing-heading-reveal 900ms ease-out both;
+}
+
+.pricing-section.is-visible .pricing-card {
+  animation:
+    pricing-card-reveal 800ms ease-out both,
+    pricing-card-float 3.5s 1s ease-in-out infinite;
+}
+
+.pricing-section.is-visible .pricing-decoration {
+  animation: pricing-decoration-float 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-heading,
+  .pricing-card {
+    opacity: 1;
+  }
+
+  .pricing-section.is-visible .pricing-heading,
+  .pricing-section.is-visible .pricing-card,
+  .pricing-section.is-visible .pricing-decoration {
+    animation: none;
+  }
+}
+
+/* QR Ordering Animations */
+
+@keyframes qr-image-reveal {
+  from {
+    opacity: 0;
+    scale: 0.92;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes qr-image-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@keyframes qr-heading-reveal {
+  from {
+    opacity: 0;
+    translate: 0 -35px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes qr-description-reveal {
+  from {
+    opacity: 0;
+    translate: 0 25px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes qr-point-reveal {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes qr-point-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -5px;
+  }
+}
+
+@keyframes qr-check-bounce {
+  0%, 100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.15;
+  }
+}
+
+@keyframes qr-decoration-float {
+  0%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: 0 -16px;
+    rotate: 5deg;
+  }
+}
+
+.qr-image,
+.qr-heading,
+.qr-description,
+.qr-point {
+  opacity: 0;
+}
+
+.qr-section.is-visible .qr-image {
+  animation:
+    qr-image-reveal 900ms ease-out both,
+    qr-image-float 4s 1s ease-in-out infinite;
+}
+
+.qr-section.is-visible .qr-heading {
+  animation: qr-heading-reveal 900ms ease-out both;
+}
+
+.qr-section.is-visible .qr-description {
+  animation: qr-description-reveal 900ms 150ms ease-out both;
+}
+
+.qr-section.is-visible .qr-point {
+  animation:
+    qr-point-reveal 700ms ease-out both,
+    qr-point-float 3s ease-in-out infinite;
+}
+
+.qr-section.is-visible .qr-check {
+  animation: qr-check-bounce 2s ease-in-out infinite;
+}
+
+.qr-section.is-visible .qr-decoration {
+  animation: qr-decoration-float 3.5s ease-in-out infinite;
+}
+
+.qr-section.is-visible .qr-cup {
+  animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-image,
+  .qr-heading,
+  .qr-description,
+  .qr-point {
+    opacity: 1;
+  }
+
+  .qr-section.is-visible .qr-image,
+  .qr-section.is-visible .qr-heading,
+  .qr-section.is-visible .qr-description,
+  .qr-section.is-visible .qr-point,
+  .qr-section.is-visible .qr-check,
+  .qr-section.is-visible .qr-decoration {
+    animation: none;
+  }
+}
+
+@keyframes testimonials-heading-reveal {
+  from {
+    opacity: 0;
+    translate: 0 -35px;
+    scale: 0.95;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes testimonials-card-reveal {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes testimonials-card-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes testimonials-stars-pulse {
+  0%, 100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.12;
+  }
+}
+
+.testimonials-heading,
+.testimonials-description,
+.testimonials-card {
+  opacity: 0;
+}
+
+.testimonials-section.is-visible .testimonials-heading {
+  animation: testimonials-heading-reveal 900ms ease-out both;
+}
+
+.testimonials-section.is-visible .testimonials-description {
+  animation: testimonials-heading-reveal 900ms 150ms ease-out both;
+}
+
+.testimonials-section.is-visible .testimonials-card {
+  animation:
+    testimonials-card-reveal 800ms ease-out both,
+    testimonials-card-float 3.5s 1s ease-in-out infinite;
+}
+
+.testimonials-section.is-visible .testimonials-stars {
+  animation: testimonials-stars-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-heading,
+  .testimonials-description,
+  .testimonials-card {
+    opacity: 1;
+  }
+
+  .testimonials-section.is-visible .testimonials-heading,
+  .testimonials-section.is-visible .testimonials-description,
+  .testimonials-section.is-visible .testimonials-card,
+  .testimonials-section.is-visible .testimonials-stars {
+    animation: none;
+  }
+}
+
+@keyframes footer-reveal {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes footer-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+@keyframes footer-coffee-float {
+  0%, 100% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+  50% {
+    rotate: 12deg;
+    translate: 0 -5px;
+  }
+}
+
+@keyframes footer-social-pulse {
+  0%, 100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.1;
+  }
+}
+
+.footer-brand,
+.footer-link-column,
+.footer-newsletter {
+  opacity: 0;
+}
+
+.footer-section.is-visible .footer-brand {
+  animation: footer-reveal 900ms ease-out both;
+}
+
+.footer-section.is-visible .footer-link-column {
+  animation:
+    footer-reveal 900ms ease-out both,
+    footer-float 3.5s 1s ease-in-out infinite;
+}
+
+.footer-section.is-visible .footer-newsletter {
+  animation:
+    footer-reveal 900ms 300ms ease-out both,
+    footer-float 3.5s 1.3s ease-in-out infinite;
+}
+
+.footer-section.is-visible .footer-coffee-icon {
+  animation: footer-coffee-float 2.5s ease-in-out infinite;
+}
+
+.footer-section.is-visible .footer-social {
+  animation: footer-social-pulse 2.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-brand,
+  .footer-link-column,
+  .footer-newsletter {
+    opacity: 1;
+  }
+
+  .footer-section.is-visible .footer-brand,
+  .footer-section.is-visible .footer-link-column,
+  .footer-section.is-visible .footer-newsletter,
+  .footer-section.is-visible .footer-coffee-icon,
+  .footer-section.is-visible .footer-social {
+    animation: none;
+  }
+}

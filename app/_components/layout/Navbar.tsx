@@ -1,6 +1,8 @@
+
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import Logo from "@/app/_components/ui/Logo";
 import Button from "@/app/_components/ui/Button";
@@ -50,12 +52,23 @@ export default function Navbar() {
 
             <div className="flex items-center gap-2">
               <LanguageSwitcher />
+
+              {/* Login */}
+              <Link
+                href="/sign-in"
+                className="hidden whitespace-nowrap rounded-lg px-3 py-2 text-sm font-semibold text-primary transition-colors hover:bg-sand/40 sm:inline-flex lg:px-4 lg:text-base"
+              >
+                {t("Login")}
+              </Link>
+
+              {/* Get Started */}
               <Button
                 href="/register"
                 className="hidden whitespace-nowrap sm:inline-flex md:px-4 md:py-2 md:text-sm lg:px-6 lg:py-3 lg:text-base"
               >
                 {t("Get Started")}
               </Button>
+
               <button
                 type="button"
                 className="grid size-10 place-items-center rounded-lg text-ink md:hidden"
@@ -70,7 +83,10 @@ export default function Navbar() {
           </div>
 
           {open && (
-            <div id="mobile-menu" className="mt-3 border-t border-black/5 pt-3 md:hidden">
+            <div
+              id="mobile-menu"
+              className="mt-3 border-t border-black/5 pt-3 md:hidden"
+            >
               <ul className="flex flex-col gap-1 text-sm">
                 {links.map((l) => (
                   <li key={l.href}>
@@ -90,7 +106,22 @@ export default function Navbar() {
                   </li>
                 ))}
               </ul>
-              <Button href="#pricing" className="mt-3 w-full">
+
+              {/* Mobile Login */}
+              <Button
+                href="/sign-in"
+                className="mt-3 w-full"
+                onClick={() => setOpen(false)}
+              >
+                {t("Login")}
+              </Button>
+
+              {/* Mobile Get Started */}
+              <Button
+                href="/register"
+                className="mt-2 w-full"
+                onClick={() => setOpen(false)}
+              >
                 {t("Get Started")}
               </Button>
             </div>
@@ -100,3 +131,4 @@ export default function Navbar() {
     </header>
   );
 }
+

@@ -1,4 +1,7 @@
+
 "use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import Container from "@/app/_components/ui/Container";
@@ -33,10 +36,41 @@ const faqs = [
 
 export default function Faq() {
   const { t } = useLocale();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(section);
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="faq" className="relative overflow-hidden py-16">
+    <section
+      id="faq"
+      ref={sectionRef}
+      className={`faq-section relative overflow-hidden pt-10 pb-16 md:pt-12 md:pb-16 ${
+        isVisible ? "is-visible" : ""
+      }`}
+    >
       {/* Decorations */}
-      <div className="pointer-events-none absolute -left-4 top-6 hidden w-[13%] lg:block">
+      <div className="faq-decoration pointer-events-none absolute -left-4 top-6 hidden w-[13%] lg:block">
         <Image
           src="/Faq/Faq.png"
           alt=""
@@ -45,18 +79,18 @@ export default function Faq() {
           className="h-auto w-full"
         />
       </div>
-      
 
       <Container className="relative z-10">
-        <h2 className="text-center text-3xl font-bold text-ink sm:text-4xl">
+        <h2 className="faq-title text-center text-3xl font-bold text-ink sm:text-4xl">
           {t("Frequently Asked Questions")}
         </h2>
 
         <div className="mx-auto mt-12 grid max-w-5xl items-start gap-x-8 gap-y-5 md:grid-cols-2">
-          {faqs.map(({ q, a }) => (
+          {faqs.map(({ q, a }, index) => (
             <details
               key={q}
-              className="group rounded-lg bg-white px-4 py-3 shadow-md ring-1 ring-black/5"
+              style={{ animationDelay: `${200 + index * 180}ms` }}
+              className="faq-item group rounded-lg bg-white px-4 py-3 shadow-md ring-1 ring-black/5"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden">
                 {t(q)}
@@ -65,7 +99,10 @@ export default function Faq() {
                   aria-hidden
                 />
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink/75">{t(a)}</p>
+
+              <p className="mt-3 text-sm leading-relaxed text-ink/75">
+                {t(a)}
+              </p>
             </details>
           ))}
         </div>
@@ -73,3 +110,5 @@ export default function Faq() {
     </section>
   );
 }
+
+

@@ -1,5 +1,7 @@
+
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Coffee, Mail, MessageCircle } from "lucide-react";
@@ -75,96 +77,130 @@ const socials = [
 
 export default function Footer() {
   const { t } = useLocale();
+  const footerRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(footer);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer className=" pt-10">
-     
-        <div className="relative overflow-hidden  bg-primary text-[#fdf3e1]">
-          <Image
-            src="/footer/footer-bg.png"
-            alt=""
-            fill
-            sizes="100vw"
-            className="z-0 object-cover"
-          />
+    <footer
+      ref={footerRef}
+      className={`footer-section pt-10 ${
+        isVisible ? "is-visible" : ""
+      }`}
+    >
+      <div className="relative overflow-hidden bg-primary text-[#fdf3e1]">
+        <Image
+          src="/footer/footer-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="z-0 object-cover"
+        />
 
-          <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[1.2fr_2fr_1.3fr] lg:gap-0 lg:px-12">
-            {/* Brand */}
-            <div className="lg:pe-8">
-              <Link href="/" className="flex items-center gap-3 text-2xl font-bold">
-                <Coffee className="size-8" aria-hidden />
-                CAFE HUB
-              </Link>
-              <p className="mt-5 max-w-xs text-sm leading-7 text-[#fdf3e1]/90">
-                {t("A smarter way to manage your café. Bookings, orders, memberships, and more — all in one place.")}
-              </p>
-              <ul className="mt-5 flex gap-3">
-                {socials.map(({ icon: Icon, label, href }) => (
-                  <li key={label}>
-                    <a
-                      href={href}
-                      aria-label={t(label)}
-                      className="grid size-9 place-items-center rounded-lg bg-[#fdf3e1] text-primary transition-colors hover:bg-sand"
-                    >
-                      <Icon className="size-4" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[1.2fr_2fr_1.3fr] lg:gap-0 lg:px-12">
 
-            {/* Links */}
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-0">
-              {columns.map(({ title, links }) => (
-                <nav
-                  key={title}
-                  aria-label={t(title)}
-                  className="sm:border-s sm:border-orange-400/30 sm:px-4 sm:text-center"
-                >
-                  <h3 className="text-sm font-bold">{t(title)}</h3>
-                  <ul className="mt-4 space-y-3 text-sm text-[#fdf3e1]/85">
-                    {links.map((l) => (
-                      <li key={l.label}>
-                        <a href={l.href} className="transition-colors hover:text-sand">
-                          {t(l.label)}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+          {/* Brand */}
+          <div className="footer-brand lg:pe-8">
+            <Link href="/" className="flex items-center gap-3 text-2xl font-bold">
+              <Coffee className="footer-coffee-icon size-8" aria-hidden />
+              CAFE HUB
+            </Link>
+
+            <p className="mt-5 max-w-xs text-sm leading-7 text-[#fdf3e1]/90">
+              {t("A smarter way to manage your café. Bookings, orders, memberships, and more — all in one place.")}
+            </p>
+
+            <ul className="mt-5 flex gap-3">
+              {socials.map(({ icon: Icon, label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    aria-label={t(label)}
+                    className="footer-social grid size-9 place-items-center rounded-lg bg-[#fdf3e1] text-primary transition-colors hover:bg-sand"
+                  >
+                    <Icon className="size-4" />
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
+          </div>
 
-            {/* Newsletter */}
-            <div className="lg:border-s lg:border-orange-400/30 lg:ps-8">
-              <h3 className="text-base font-bold">{t("Stay in the Loop")}</h3>
-              <p className="mt-3 text-sm leading-6 text-[#fdf3e1]/90">
-                {t("Get the latest updates and insights for your cafe.")}
-              </p>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="mt-4 flex flex-wrap gap-2"
+          {/* Links */}
+          <div className="footer-links grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-0">
+            {columns.map(({ title, links }, index) => (
+              <nav
+                key={title}
+                aria-label={t(title)}
+                className="footer-link-column sm:border-s sm:border-orange-400/30 sm:px-4 sm:text-center"
+                style={{ animationDelay: `${index * 180}ms` }}
               >
-                <label className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-[#fdf3e1]/60 px-3 py-2.5">
-                  <Mail className="size-4 shrink-0" aria-hidden />
-                  <span className="sr-only">{t("Email")}</span>
-                  <input
-                    type="email"
-                    required
-                    placeholder={t("Enter your email")}
-                    className="w-full min-w-0 bg-transparent text-xs text-white placeholder:text-[#fdf3e1]/70 focus:outline-none"
-                  />
-                </label>
-                <button
-                  type="submit"
-                  className="rounded-lg bg-sand px-4 py-2.5 text-xs font-bold text-primary transition-colors hover:bg-[#fdf3e1]"
-                >
-                  {t("Subscribe")}
-                </button>
-              </form>
-            </div>
+                <h3 className="text-sm font-bold">{t(title)}</h3>
+
+                <ul className="mt-4 space-y-3 text-sm text-[#fdf3e1]/85">
+                  {links.map((l) => (
+                    <li key={l.label}>
+                      <a
+                        href={l.href}
+                        className="transition-colors hover:text-sand"
+                      >
+                        {t(l.label)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
+
+          {/* Newsletter */}
+          <div className="footer-newsletter lg:border-s lg:border-orange-400/30 lg:ps-8">
+            <h3 className="text-base font-bold">{t("Stay in the Loop")}</h3>
+
+            <p className="mt-3 text-sm leading-6 text-[#fdf3e1]/90">
+              {t("Get the latest updates and insights for your cafe.")}
+            </p>
+
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="mt-4 flex flex-wrap gap-2"
+            >
+              <label className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-[#fdf3e1]/60 px-3 py-2.5">
+                <Mail className="size-4 shrink-0" aria-hidden />
+                <span className="sr-only">{t("Email")}</span>
+                <input
+                  type="email"
+                  required
+                  placeholder={t("Enter your email")}
+                  className="w-full min-w-0 bg-transparent text-xs text-white placeholder:text-[#fdf3e1]/70 focus:outline-none"
+                />
+              </label>
+
+              <button
+                type="submit"
+                className="rounded-lg bg-sand px-4 py-2.5 text-xs font-bold text-primary transition-colors hover:bg-[#fdf3e1]"
+              >
+                {t("Subscribe")}
+              </button>
+            </form>
           </div>
         </div>
-   
+      </div>
     </footer>
   );
 }
+

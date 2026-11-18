@@ -1,4 +1,6 @@
+
 "use client";
+
 import Image from "next/image";
 import Container from "@/app/_components/ui/Container";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -20,6 +22,7 @@ const stats = [
 
 function StoreButtons({ className }: { className?: string }) {
   const { t, locale } = useLocale();
+
   return (
     <div className={className}>
       <a href="#" aria-label={t("Download on the App Store")} className="block">
@@ -32,6 +35,7 @@ function StoreButtons({ className }: { className?: string }) {
           className="h-12 w-auto object-contain md:h-11 lg:h-12"
         />
       </a>
+
       <a href="#" aria-label={t("Get it on Google Play")} className="block">
         <Image
           src={locale === "ar" ? "/app/google-play-ar.svg" : "/app/google-play.png"}
@@ -48,10 +52,11 @@ function StoreButtons({ className }: { className?: string }) {
 
 export default function AppShowcase() {
   const { t } = useLocale();
+
   return (
-    <section className="relative overflow-hidden py-12 md:py-16">
+   <section className="relative overflow-hidden pt-8 pb-12 md:pt-10 md:pb-16">
       {/* Decoration (tablet and up) */}
-      <div className="pointer-events-none absolute -left-2 top-[4%] hidden w-[15%] md:block">
+      <div className="pointer-events-none absolute -left-2 top-[4%] hidden w-[15%] md:block hero-float">
         <Image
           src="/app/leaves-left.png"
           alt=""
@@ -63,26 +68,28 @@ export default function AppShowcase() {
 
       <Container className="relative z-10">
         <div className="md:mx-auto md:max-w-2xl md:text-center">
-          <h2 className="text-2xl font-bold leading-tight text-ink md:text-3xl lg:text-4xl">
+          <h2 className="hero-animate text-2xl font-bold leading-tight text-ink md:text-3xl lg:text-4xl">
             {t("A Better Way to Run Your Café")}
           </h2>
-          <p className="mt-3 text-base text-ink/85 md:mt-5">
+
+          <p className="hero-animate hero-animate-delay-1 mt-3 text-base text-ink/85 md:mt-5">
             {t("CafeHub helps you spend less time managing operations and more time creating memorable customer experiences.")}
           </p>
         </div>
 
-        <ul className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-x-4 gap-y-6 md:mt-10 md:max-w-4xl md:grid-cols-4 md:gap-x-6">
+        <ul className="hero-animate hero-animate-delay-2 mx-auto mt-8 grid max-w-sm grid-cols-2 gap-x-4 gap-y-6 md:mt-10 md:max-w-4xl md:grid-cols-4 md:gap-x-6">
           {stats.map(({ icon, value, label }) => (
             <li key={label} className="flex items-center gap-3">
-              <span className="grid size-14 shrink-0 place-items-center rounded-xl border border-black/5 bg-white shadow-sm md:size-16">
-                <Image
-                  src={icon}
-                  alt=""
-                  width={32}
-                  height={32}
-                  className="size-7 md:size-8"
-                />
-              </span>
+           <span className="hero-float grid size-14 shrink-0 place-items-center rounded-xl border border-black/5 bg-white shadow-sm md:size-16">
+  <Image
+    src={icon}
+    alt=""
+    width={32}
+    height={32}
+    className="size-7 md:size-8"
+  />
+</span>
+
               <div className="min-w-0">
                 <p className="text-base font-bold leading-tight text-ink">
                   {value}
@@ -99,7 +106,7 @@ export default function AppShowcase() {
       {/* Phones block */}
       <div className="relative mt-12 bg-gradient-to-b from-white to-[#f6eee6] py-10 md:mt-14 md:bg-none md:py-0">
         {/* Decorations (tablet and up) */}
-        <div className="pointer-events-none absolute -right-4 top-10 z-0 hidden w-[17%] md:block">
+        <div className="pointer-events-none absolute -right-4 top-10 z-0 hidden w-[17%] md:block hero-float">
           <Image
             src="/app/cup.png"
             alt=""
@@ -108,7 +115,8 @@ export default function AppShowcase() {
             className="h-auto w-full"
           />
         </div>
-        <div className="pointer-events-none absolute -bottom-25 right-0 z-0 hidden w-[9%] md:block">
+
+        <div className="pointer-events-none absolute -bottom-25 right-0 z-0 hidden w-[9%] md:block hero-float">
           <Image
             src="/app/muffen.png"
             alt=""
@@ -117,7 +125,8 @@ export default function AppShowcase() {
             className="h-auto w-full"
           />
         </div>
-        <div className="pointer-events-none absolute -bottom-6 left-0 z-0 hidden w-[15%] md:block">
+
+        <div className="pointer-events-none absolute -bottom-6 left-0 z-0 hidden w-[15%] md:block hero-float">
           <Image
             src="/app/soda.png"
             alt=""
@@ -130,10 +139,11 @@ export default function AppShowcase() {
         <Container className="relative z-10">
           <div className="grid items-center gap-6 md:grid-cols-[1.15fr_1fr] md:gap-10 lg:gap-16">
             {/* Text */}
-            <div className="md:order-2">
+            <div className="md:order-2 hero-animate">
               <h3 className="text-2xl font-bold leading-tight text-ink md:text-3xl lg:text-4xl">
                 {t("A Better Café Experience Starts Here")}
               </h3>
+
               <p className="mt-3 max-w-lg text-base leading-relaxed text-ink/80 md:mt-4">
                 {t("Let your customers explore your menu, discover their favorites, place orders, and book tables through a smooth, convenient mobile experience.")}
               </p>
@@ -142,7 +152,7 @@ export default function AppShowcase() {
             </div>
 
             {/* Phones */}
-            <div className="relative mx-auto aspect-[1/0.95] w-full max-w-[600px] md:order-1">
+            <div className="relative mx-auto aspect-[1/0.95] w-full max-w-[600px] md:order-1 hero-visual-animate">
               <Image
                 src="/app/phones.png"
                 alt={t("CafeHub mobile app screens")}
@@ -160,3 +170,4 @@ export default function AppShowcase() {
     </section>
   );
 }
+

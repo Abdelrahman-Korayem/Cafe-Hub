@@ -1,5 +1,8 @@
+
 "use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import Container from "@/app/_components/ui/Container";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
@@ -57,10 +60,39 @@ const features = [
 
 export default function Features() {
   const { t } = useLocale();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="features" className="relative overflow-hidden py-12 lg:py-16">
+    <section
+      id="features"
+      ref={sectionRef}
+      className={cn(
+        "features-section relative overflow-hidden pt-8 pb-12 lg:pt-10 lg:pb-16",
+        isVisible && "is-visible"
+      )}
+    >
       {/* Muffin (desktop only) */}
-      <div className="pointer-events-none absolute -right-2 top-4 hidden w-[15%] lg:block">
+      <div className="features-decoration pointer-events-none absolute -right-2 top-4 hidden w-[15%] lg:block">
         <Image
           src="/features/FeaturesMuffin.png"
           alt=""
@@ -72,10 +104,11 @@ export default function Features() {
 
       <Container className="relative">
         <div className="max-w-xl lg:mx-auto lg:max-w-3xl lg:text-center">
-          <h2 className="text-2xl font-bold leading-tight text-ink sm:text-3xl lg:text-4xl">
+          <h2 className="features-heading text-2xl font-bold leading-tight text-ink sm:text-3xl lg:text-4xl">
             {t("Everything You Need to Run Your Cafe in one Place")}
           </h2>
-          <p className="mt-4 text-base text-ink/85 lg:mt-6 lg:text-lg">
+
+          <p className="features-description mt-4 text-base text-ink/85 lg:mt-6 lg:text-lg">
             {t("From bookings to staff management, CafeHub brings your daily operations together in one simple platform.")}
           </p>
         </div>
@@ -84,12 +117,13 @@ export default function Features() {
           {features.map(({ icon, title, text, order }, i) => (
             <li
               key={`${title}-${i}`}
+              style={{ animationDelay: `${i * 120}ms` }}
               className={cn(
-                "flex items-start gap-3 rounded-xl border border-[#f6d9ae] bg-white p-3 lg:items-center lg:p-4",
-                order,
+                "features-card flex items-start gap-3 rounded-xl border border-[#f6d9ae] bg-white p-3 lg:items-center lg:p-4",
+                order
               )}
             >
-              <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-[#f6ebd9] lg:size-12">
+              <span className="features-icon grid size-10 shrink-0 place-items-center rounded-lg bg-[#f6ebd9] lg:size-12">
                 <Image
                   src={icon}
                   alt=""
@@ -98,10 +132,12 @@ export default function Features() {
                   className="size-5 lg:size-6"
                 />
               </span>
+
               <div className="min-w-0">
                 <h3 className="text-sm font-bold leading-tight text-ink lg:text-base">
                   {t(title)}
                 </h3>
+
                 <p className="mt-1.5 text-[10px] leading-relaxed text-ink/75 lg:text-[11px]">
                   {t(text)}
                 </p>
@@ -113,3 +149,4 @@ export default function Features() {
     </section>
   );
 }
+
