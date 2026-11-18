@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120" role="img" aria-labelledby="title">
+  <title id="title">احصل عليه من Google Play</title>
+  <rect x="2" y="2" width="396" height="116" rx="14" fill="#050505" stroke="#a6a6a6" stroke-width="4"/>
+  <defs>
+    <clipPath id="play"><path d="M333 29 378 60 333 91Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#play)">
+    <path d="M333 29 352 60 333 91Z" fill="#34a853"/>
+    <path d="M333 29 367 52 352 60Z" fill="#4285f4"/>
+    <path d="M352 60 367 68 333 91Z" fill="#ea4335"/>
+    <path d="M352 60 378 60 367 52Z" fill="#fbbc04"/>
+    <path d="M352 60 378 60 367 68Z" fill="#fbbc04"/>
+  </g>
+  <text x="204" y="49" fill="#fff" font-family="Arial,Tahoma,sans-serif" font-size="22" text-anchor="middle" direction="rtl">احصل عليه من</text>
+  <text x="204" y="83" fill="#fff" font-family="Arial,sans-serif" font-size="31" font-weight="600" text-anchor="middle">Google Play</text>
+</svg>

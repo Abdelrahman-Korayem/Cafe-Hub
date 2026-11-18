@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Container from "@/app/_components/ui/Container";
 import Button from "@/app/_components/ui/Button";
 import Logo from "@/app/_components/ui/Logo";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import LanguageSwitcher from "@/app/_components/ui/LanguageSwitcher";
 
 export default function NotFound() {
+  const { t } = useLocale();
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#faf3e4]">
       {/* Dotted texture */}
@@ -50,8 +55,9 @@ export default function NotFound() {
 
       {/* Header */}
       <header className="relative z-10 py-5 ">
-        <Container>
+        <Container className="flex items-center justify-between">
           <Logo />
+          <LanguageSwitcher />
         </Container>
       </header>
 
@@ -60,7 +66,7 @@ export default function NotFound() {
         <div>
           <p
             className="flex items-center justify-center gap-1 text-[7rem] font-bold leading-none text-primary sm:gap-3 sm:text-[11rem] lg:text-[14rem]"
-            aria-label="Error 404"
+            aria-label={t("Error 404")}
           >
             <span aria-hidden>4</span>
             <Image
@@ -75,16 +81,15 @@ export default function NotFound() {
           </p>
 
           <h1 className="mt-4 font-script text-4xl font-semibold text-secondary sm:text-5xl lg:text-6xl">
-            Oops, this cup is empty
+            {t("Oops, this cup is empty")}
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-base text-ink/80 sm:text-lg">
-            The page you’re looking for doesn’t exist or has been moved. Let’s
-            get you back to the good stuff.
+            {t("The page you’re looking for doesn’t exist or has been moved. Let’s get you back to the good stuff.")}
           </p>
 
           <Button href="/" arrow className="mt-8">
-            Back to Home
+            {t("Back to Home")}
           </Button>
         </div>
       </main>

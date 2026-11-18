@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import { Check } from "lucide-react";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 import Container from "@/app/_components/ui/Container";
 
 const points = [
@@ -10,6 +12,7 @@ const points = [
 ];
 
 export default function QrOrdering() {
+  const { t } = useLocale();
   return (
     <section
       id="our-story"
@@ -42,7 +45,7 @@ export default function QrOrdering() {
           <div className="relative aspect-[413/378] w-full overflow-hidden rounded-2xl shadow-md md:aspect-[778/526] md:rounded-3xl md:rounded-tr-[4.5rem] lg:rounded-tr-[6rem]">
             <Image
               src="/features/qr-order.png"
-              alt="A table QR code and the CafeHub ordering app on a phone"
+              alt={t("A table QR code and the CafeHub ordering app on a phone")}
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover object-[70%_50%] md:object-center"
@@ -52,14 +55,12 @@ export default function QrOrdering() {
           {/* Text */}
           <div>
             <h2 className="text-2xl font-bold leading-tight text-ink md:text-3xl lg:text-5xl">
-              Let Your Customers{" "}
+              {t("Let Your Customers")} {" "}
               <br className="hidden md:block" />
-              Order with a Scan
+              {t("Order with a Scan")}
             </h2>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-ink/80 md:mt-4 lg:text-lg">
-              Place a unique QR code on every table and let customers browse
-              your menu, customize their orders, and pay directly from their
-              phones.
+              {t("Place a unique QR code on every table and let customers browse your menu, customize their orders, and pay directly from their phones.")}
             </p>
 
             <ul className="mt-5 space-y-4 md:mt-6 lg:space-y-5">
@@ -71,7 +72,7 @@ export default function QrOrdering() {
                   <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary text-white">
                     <Check className="size-3.5" strokeWidth={3} aria-hidden />
                   </span>
-                  {p}
+                  {t(p)}
                 </li>
               ))}
             </ul>

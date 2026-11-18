@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import Container from "@/app/_components/ui/Container";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 const items = [
   {
@@ -30,9 +32,10 @@ const items = [
 ];
 
 export default function FeaturesBar() {
+  const { t } = useLocale();
   return (
     <section
-      aria-label="Highlights"
+      aria-label={t("Features")}
       className="border-y border-black/10 bg-white py-8 lg:border-y-0 lg:bg-gradient-to-b lg:from-[#fdf6ea] lg:to-[#f8ebd8] lg:py-7"
     >
       <Container>
@@ -48,9 +51,9 @@ export default function FeaturesBar() {
               />
               <div>
                 <p className="text-base font-bold leading-tight text-ink lg:text-xl">
-                  {title}
+                  {t(title)}
                 </p>
-                <p className="mt-1 text-xs text-ink/80 lg:text-sm">{text}</p>
+                <p className="mt-1 text-xs text-ink/80 lg:text-sm">{t(text)}</p>
               </div>
             </li>
           ))}

@@ -6,6 +6,8 @@ import Logo from "@/app/_components/ui/Logo";
 import Button from "@/app/_components/ui/Button";
 import Container from "@/app/_components/ui/Container";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import LanguageSwitcher from "@/app/_components/ui/LanguageSwitcher";
 
 const links = [
   { href: "#home", label: "Home" },
@@ -16,13 +18,14 @@ const links = [
 ];
 
 export default function Navbar() {
+  const { t } = useLocale();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
 
   return (
     <header className="fixed inset-x-0 top-0 z-500 bg-white shadow-sm">
       <Container>
-        <nav aria-label="Main" className="py-3">
+        <nav aria-label={t("Main")} className="py-3">
           <div className="flex items-center justify-between gap-4">
             <Logo />
 
@@ -39,25 +42,26 @@ export default function Navbar() {
                         : "border-transparent",
                     )}
                   >
-                    {l.label}
+                    {t(l.label)}
                   </a>
                 </li>
               ))}
             </ul>
 
             <div className="flex items-center gap-2">
+              <LanguageSwitcher />
               <Button
                 href="/register"
                 className="hidden whitespace-nowrap sm:inline-flex md:px-4 md:py-2 md:text-sm lg:px-6 lg:py-3 lg:text-base"
               >
-                Get Started
+                {t("Get Started")}
               </Button>
               <button
                 type="button"
                 className="grid size-10 place-items-center rounded-lg text-ink md:hidden"
                 aria-expanded={open}
                 aria-controls="mobile-menu"
-                aria-label={open ? "Close menu" : "Open menu"}
+                aria-label={open ? t("Close menu") : t("Open menu")}
                 onClick={() => setOpen((v) => !v)}
               >
                 {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -81,13 +85,13 @@ export default function Navbar() {
                         active === l.href && "font-semibold text-secondary",
                       )}
                     >
-                      {l.label}
+                      {t(l.label)}
                     </a>
                   </li>
                 ))}
               </ul>
               <Button href="#pricing" className="mt-3 w-full">
-                Get Started
+                {t("Get Started")}
               </Button>
             </div>
           )}

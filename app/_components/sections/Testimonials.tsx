@@ -1,5 +1,7 @@
+"use client";
 import { Star } from "lucide-react";
 import Container from "@/app/_components/ui/Container";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 const testimonials = [
   {
@@ -23,16 +25,16 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const { t } = useLocale();
   return (
     <section className="py-16">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold text-ink sm:text-4xl">
-            What cafe Owners Say
+            {t("What cafe owners are saying")}
           </h2>
           <p className="mt-5 text-base text-ink/80">
-            CafeHub helps you spend less time managing operations and more time
-            creating memorable customer experiences.
+            {t("Trusted by cafe owners around the world.")}
           </p>
         </div>
 
@@ -42,15 +44,13 @@ export default function Testimonials() {
               key={name}
               className="flex flex-col rounded-2xl bg-white p-6 shadow-md ring-1 ring-black/5"
             >
-              <div className="flex gap-1 text-secondary" aria-label="5 out of 5 stars">
+              <div className="flex gap-1 text-secondary" aria-label={t("5 out of 5 stars")}>
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="size-4 fill-current" aria-hidden />
                 ))}
               </div>
 
-              <blockquote className="mt-5 flex-1 text-sm leading-relaxed text-ink/85">
-                “{quote}”
-              </blockquote>
+              <blockquote className="mt-5 flex-1 text-sm leading-relaxed text-ink/85">“{t(quote)}”</blockquote>
 
               <div className="mt-6 flex items-center gap-3">
                 <span
@@ -61,7 +61,7 @@ export default function Testimonials() {
                 </span>
                 <div>
                   <p className="text-sm font-bold leading-tight text-ink">{name}</p>
-                  <p className="text-xs text-ink/70">{role}</p>
+                  <p className="text-xs text-ink/70">{t(role)}</p>
                 </div>
               </div>
             </li>

@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import Container from "@/app/_components/ui/Container";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
 
 const features = [
@@ -54,6 +56,7 @@ const features = [
 ];
 
 export default function Features() {
+  const { t } = useLocale();
   return (
     <section id="features" className="relative overflow-hidden py-12 lg:py-16">
       {/* Muffin (desktop only) */}
@@ -70,11 +73,10 @@ export default function Features() {
       <Container className="relative">
         <div className="max-w-xl lg:mx-auto lg:max-w-3xl lg:text-center">
           <h2 className="text-2xl font-bold leading-tight text-ink sm:text-3xl lg:text-4xl">
-            Everything You Need to Run Your Cafe in one Place
+            {t("Everything You Need to Run Your Cafe in one Place")}
           </h2>
           <p className="mt-4 text-base text-ink/85 lg:mt-6 lg:text-lg">
-            From bookings to staff management, CafeHub brings your daily
-            operations together in one simple platform.
+            {t("From bookings to staff management, CafeHub brings your daily operations together in one simple platform.")}
           </p>
         </div>
 
@@ -98,10 +100,10 @@ export default function Features() {
               </span>
               <div className="min-w-0">
                 <h3 className="text-sm font-bold leading-tight text-ink lg:text-base">
-                  {title}
+                  {t(title)}
                 </h3>
                 <p className="mt-1.5 text-[10px] leading-relaxed text-ink/75 lg:text-[11px]">
-                  {text}
+                  {t(text)}
                 </p>
               </div>
             </li>

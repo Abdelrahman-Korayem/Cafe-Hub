@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Coffee, Radio, Zap } from "lucide-react";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function AuthVisual() {
+  const { t } = useLocale();
   return (
     <section className="relative hidden overflow-hidden bg-primary lg:block">
       <Image
@@ -25,20 +29,18 @@ export default function AuthVisual() {
           </Link>
           <span className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-wider ring-1 ring-white/20 backdrop-blur">
             <span className="size-1.5 rounded-full bg-secondary" />
-            Specialty Roastery OS
+            {t("Specialty Roastery OS")}
           </span>
         </div>
 
         <div>
           <h1 className="text-4xl font-bold leading-tight">
-            Smarter Cafes,
+            {t("Smarter Cafes,")}
             <br />
-            Happier Guests.
+            {t("Happier Guests.")}
           </h1>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-white/80">
-            The comprehensive multi-tenant operations suite crafted for
-            specialty roasters, fast-casual bistros, and high-volume espresso
-            bars.
+            {t("The comprehensive multi-tenant operations suite crafted for specialty roasters, fast-casual bistros, and high-volume espresso bars.")}
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -47,17 +49,17 @@ export default function AuthVisual() {
                 <Radio className="size-4" aria-hidden />
               </span>
               <div>
-                <p className="text-xs font-semibold">Active Roastery Session</p>
+                <p className="text-xs font-semibold">{t("Active Roastery Session")}</p>
                 <p className="mt-0.5 flex items-center gap-1.5 text-[10px] text-white/70">
                   <span className="size-1.5 rounded-full bg-green-400" />
-                  Live Hub connected
+                  {t("Live Hub connected")}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 ring-1 ring-white/20 backdrop-blur">
               <Zap className="size-4 text-secondary" aria-hidden />
-              <p className="text-xs font-semibold">Ticket Latency</p>
+              <p className="text-xs font-semibold">{t("Ticket Latency")}</p>
               <span className="rounded-md bg-white/15 px-2 py-1 text-[10px] font-semibold">
                 &lt; 1.2s avg
               </span>

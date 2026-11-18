@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Coffee, Mail, MessageCircle } from "lucide-react";
-import Container from "@/app/_components/ui/Container";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -74,6 +74,7 @@ const socials = [
 ];
 
 export default function Footer() {
+  const { t } = useLocale();
   return (
     <footer className=" pt-10">
      
@@ -88,21 +89,20 @@ export default function Footer() {
 
           <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[1.2fr_2fr_1.3fr] lg:gap-0 lg:px-12">
             {/* Brand */}
-            <div className="lg:pr-8">
+            <div className="lg:pe-8">
               <Link href="/" className="flex items-center gap-3 text-2xl font-bold">
                 <Coffee className="size-8" aria-hidden />
                 CAFE HUB
               </Link>
               <p className="mt-5 max-w-xs text-sm leading-7 text-[#fdf3e1]/90">
-                A smarter way to manage your café. Bookings, orders,
-                memberships, and more — all in one place.
+                {t("A smarter way to manage your café. Bookings, orders, memberships, and more — all in one place.")}
               </p>
               <ul className="mt-5 flex gap-3">
                 {socials.map(({ icon: Icon, label, href }) => (
                   <li key={label}>
                     <a
                       href={href}
-                      aria-label={label}
+                      aria-label={t(label)}
                       className="grid size-9 place-items-center rounded-lg bg-[#fdf3e1] text-primary transition-colors hover:bg-sand"
                     >
                       <Icon className="size-4" />
@@ -117,15 +117,15 @@ export default function Footer() {
               {columns.map(({ title, links }) => (
                 <nav
                   key={title}
-                  aria-label={title}
-                  className="sm:border-l sm:border-orange-400/30 sm:px-4 sm:text-center"
+                  aria-label={t(title)}
+                  className="sm:border-s sm:border-orange-400/30 sm:px-4 sm:text-center"
                 >
-                  <h3 className="text-sm font-bold">{title}</h3>
+                  <h3 className="text-sm font-bold">{t(title)}</h3>
                   <ul className="mt-4 space-y-3 text-sm text-[#fdf3e1]/85">
                     {links.map((l) => (
                       <li key={l.label}>
                         <a href={l.href} className="transition-colors hover:text-sand">
-                          {l.label}
+                          {t(l.label)}
                         </a>
                       </li>
                     ))}
@@ -135,11 +135,10 @@ export default function Footer() {
             </div>
 
             {/* Newsletter */}
-            <div className="lg:border-l lg:border-orange-400/30 lg:pl-8">
-              <h3 className="text-base font-bold">Stay in the Loop</h3>
+            <div className="lg:border-s lg:border-orange-400/30 lg:ps-8">
+              <h3 className="text-base font-bold">{t("Stay in the Loop")}</h3>
               <p className="mt-3 text-sm leading-6 text-[#fdf3e1]/90">
-                Get the latest updates, tips, and features delivered to your
-                inbox.
+                {t("Get the latest updates and insights for your cafe.")}
               </p>
               <form
                 onSubmit={(e) => e.preventDefault()}
@@ -147,11 +146,11 @@ export default function Footer() {
               >
                 <label className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-[#fdf3e1]/60 px-3 py-2.5">
                   <Mail className="size-4 shrink-0" aria-hidden />
-                  <span className="sr-only">Email</span>
+                  <span className="sr-only">{t("Email")}</span>
                   <input
                     type="email"
                     required
-                    placeholder="Enter your email"
+                    placeholder={t("Enter your email")}
                     className="w-full min-w-0 bg-transparent text-xs text-white placeholder:text-[#fdf3e1]/70 focus:outline-none"
                   />
                 </label>
@@ -159,7 +158,7 @@ export default function Footer() {
                   type="submit"
                   className="rounded-lg bg-sand px-4 py-2.5 text-xs font-bold text-primary transition-colors hover:bg-[#fdf3e1]"
                 >
-                  Get in touch
+                  {t("Subscribe")}
                 </button>
               </form>
             </div>
